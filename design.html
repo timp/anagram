@@ -130,7 +130,7 @@
                                   
             <h1>Design Considerations</h1>
 <h1>Implementation approach</h1>
-<p>The use of [http://maven.apache.org][Maven] is specified. </p>
+<p>The use of <a class="externalLink" href="http://maven.apache.org">Maven</a> is specified. </p>
 <p>Maven is used to build, test and package the application; it is also used to generate the application&#x2019;s documentation. </p>
 <p>The system will be coded using a Test Driven approach. At the completeion of a Red-Green-Refactor loop IntelliJ&#x2019;s coverage and analysis tools are used to ensure redundant code has been removed and style is maintained. When faking a method it is always marked with a TODO tag so that it is easy to check that there are no faked methods remaining at completion.</p>
 <h1>Problem Analysis</h1>
@@ -139,7 +139,7 @@
 <div class="section">
 <div class="section">
 <h5><a name="Definition_of_an_anagram"></a>Definition of an anagram</h5>
-<p>From [WikiPedia][https://en.wikipedia.org/wiki/Anagram]</p>
+<p>From <a class="externalLink" href="https://en.wikipedia.org/wiki/Anagram">WikiPedia</a></p>
 
 <blockquote>
 <p>An anagram is a type of word play, the result of rearranging the letters of a word or phrase to produce a new word or phrase, using all the original letters exactly once;</p>
@@ -164,7 +164,7 @@
 <p>We are given a word list and can build a dictionary from that which is keyed upon a a sorted copy of the string and has a list of all words with the same key. </p></div>
 <div class="section">
 <h6><a name="Finding_all_possible_ways_of_sub_dividing_a_string"></a>Finding all possible ways of sub dividing a string</h6>
-<p>The problem is to generate all permutations of a string and then all possible word boundaries for each permutation.  We hit the combinatorial explosion fairly early! <i>Benedict Cumberbatch</i> is 19 characters  of which there are 19 factorial (121645100408832000) permutations for each one of which  there are a further 19 factorial ways of splitting them into words.  We need to use the dictionalry to cut the search space down.</p></div>
+<p>The problem is to generate all permutations of a string and then all possible word boundaries for each permutation.  We hit the combinatorial explosion fairly early! <i>Benedict Cumberbatch</i> is 19 characters  of which there are 19 factorial (121645100408832000) permutations for each one of which  there are a further 19 factorial ways of splitting them into words.  We need to use the dictionalry to cut the search space down.  The recommended technique for dealing with this size problem is to use a data structure  called a trie, a use of which is described in <a class="externalLink" href="http://www.it.iitb.ac.in/~deepak/deepak/placement/Programming_pearls.pdf">Programming Pearls - Column 2</a>.</p></div>
 <div class="section">
 <h6><a name="Parrallelisation"></a>Parrallelisation</h6>
 <p>The tests we have developed so far should still pass after parallelisation.</p></div></div></div></div></div>
