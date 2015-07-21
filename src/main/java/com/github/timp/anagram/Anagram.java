@@ -71,7 +71,6 @@ public class Anagram {
       int ret = 0;
       for (int i = 0; i < n; i++) {
         String nextPrefix =  prefix + str.charAt(i);
-        if (dictionary.)
         ret += permutation(nextPrefix, str.substring(0, i) + str.substring(i + 1, n));
       }
       return ret;
