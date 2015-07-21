@@ -25,6 +25,10 @@
       <item name="Design" href="design.html"/>
       <item name="Usage"  href="usage.html"/>
     </menu>
+    <menu> name="Testing">
+      <item name="JaCoCo" href="jacoco" />
+    </menu>
+
     <menu ref="reports" inherit="bottom" />
 
   </body>

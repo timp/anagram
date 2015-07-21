@@ -1,0 +1,16 @@
+Outstanding items at tim of submission
+======================================
+
+DONE All input letters must be used, just once
+DONE Only words from the dictionary can be output
+TODO Repeated output should be filtered
+TODO Multiple threads must be used to search the dictionary
+DONE  Unit tests must be supplied
+DONE JavaDoc expected
+TODO Command Line looping
+  Command line interface - at the moment this takes a single command, without looping
+DONE  No external libraries to be used
+DONE JDK 7 compatible - Maven enforced
+DONE Should be a maven project, with site generation.
+
+TODO The main filtering of the permutation by the trie
