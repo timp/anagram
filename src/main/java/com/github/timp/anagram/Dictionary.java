@@ -18,7 +18,7 @@ public class Dictionary {
   private static final int MAX_COMMON_KEY = 10;
 
   private HashMap<String, ArrayList<String>> store = new HashMap<>(WORD_COUNT);
-  private Trie trie = new Trie();
+  private Trie dictTrie = new Trie();
 
   /**
    * Construct using default file.
@@ -45,7 +45,7 @@ public class Dictionary {
           store.put(orderedKey, new ArrayList<String>(MAX_COMMON_KEY));
         }
         store.get(orderedKey).add(line);
-        trie.add(line);
+        dictTrie.add(line);
       }
       line = inputReader.readLine();
     }
@@ -53,6 +53,8 @@ public class Dictionary {
 
 
   /**
+   * The load loop rejects any initail capitalised words
+   * so only lowercase characters are actually encountered.
    * @return a sorted, lowercased string of letters only
    */
   public String toKey(String line) {
@@ -116,6 +118,45 @@ public class Dictionary {
   }
 
 
+  /**
+   * Find a word set in the trie.
+   * @param word the word to look for
+   * @return the anagrams found
+   */
+  public String[] lookup(String word) {
+    return lookup(word, word.length());
+  }
+
+
+  /**
+   * Find anagrams of a word.
+   * @param word the word to anagram
+   * @param len the length of legal anagrams or zero to include substrings
+   * @return the anagrams found
+   */
+  private String[] lookup(String word, int len) {
+    return lookupSet(word, len).toArray(new String[0]);
+  }
+
+  /**
+   *
+   * @param word the word to anagram
+   * @param len the length of legal anagrams or zero to include substrings
+   * @return the anagrams found
+   */
+  private Set<String> lookupSet(String word, int len) {
+    Set<String> result = new HashSet<String>();
+    fillWordSet(result, dictTrie, new StringBuilder(word), len);
+    return result;
+  }
+
+  /**
+   *
+   * @param setToFill the set to update
+   * @param t the current trie
+   * @param w the current word
+   * @param requiredLength the length of word required or 0 for substrings
+   */
   private void fillWordSet(Set<String> setToFill,
                            Trie t,
                            StringBuilder w,
@@ -136,18 +177,39 @@ public class Dictionary {
     }
   }
 
-  private Set<String> lookupSet(String w, int len) {
-    Set<String> result = new HashSet<String>();
-    fillWordSet(result, trie, new StringBuilder(w), len);
-    return result;
+
+  /**
+   *
+   * @param query the string to look for in teh dictionary
+   * @return whether this string is in the trie either as completed string or as the start of one
+   */
+  public boolean exists(String query) {
+    return exists(new StringBuilder(query), dictTrie, query.length());
   }
 
-  private String[] lookup(String word, int len) {
-    return lookupSet(word, len).toArray(new String[0]);
-  }
+  private boolean exists(StringBuilder query, Trie trie, int requiredLength) {
+    System.err.println(query);
+    System.err.println(trie.marksEndOfWord());
+    System.err.println(trie.getWord());
+    System.err.println(requiredLength);
+    System.err.println();
 
-  public String[] lookup(String word) {
-    return lookup(word, word.length());
+    if (trie.marksEndOfWord() && requiredLength == 0 ) {
+      System.err.println("Returning true");
+      return true;
+    } else {
+      boolean hasChild = false;
+      final int wlen = query.length();
+      for (int i = 0; i < wlen; i++) {
+        final Trie child = trie.getChild(query.charAt(i));
+        if (child != null) {
+          final char c = query.charAt(i);
+          query.deleteCharAt(i);
+          hasChild = exists(query, child, requiredLength - 1);
+          query.insert(i, c);
+        } else System.err.println("Null child");
+      }
+      return hasChild;
+    }
   }
-
 }

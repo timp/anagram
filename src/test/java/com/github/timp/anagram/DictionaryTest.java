@@ -65,11 +65,18 @@ public class DictionaryTest
   public void testLookup() throws Exception {
     Dictionary it = new Dictionary();
 
-    assertEquals("[be]",Arrays.toString(it.lookup("be")));
-    assertEquals("[a]",Arrays.toString(it.lookup("a")));
+    assertEquals("[be]", Arrays.toString(it.lookup("be")));
+    assertEquals("[a]", Arrays.toString(it.lookup("a")));
 
     assertEquals("[]",Arrays.toString(it.lookup("bfre")));
 
-    assertEquals("[act, cat]",Arrays.toString(it.lookup("cat")));
+    assertEquals("[act, cat]", Arrays.toString(it.lookup("cat")));
+  }
+
+  public void testExists() throws Exception {
+    Dictionary it = new Dictionary();
+
+    System.err.println(it.exists("bet"));
+
   }
 }

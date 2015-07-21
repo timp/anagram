@@ -76,6 +76,12 @@ lower case characters as the same.
  We need to know the longest word in the disctionary to establish the fan out of the trie, 
  which can be discovered by a test.
  
+ To cut down the possibility space we will load a Trie with all the strings in the dictionary 
+ and then query that for each generated permutation, pruning branches where there is no entry in 
+ the trie. 
+ 
+ 
+ 
 ###### Parrallelisation
 The tests we have developed so far should still pass after parallelisation.
 
