@@ -73,10 +73,19 @@ public class DictionaryTest
     assertEquals("[act, cat]", Arrays.toString(it.lookup("cat")));
   }
 
+  /**
+   * TODO this is incomplete
+   * @throws Exception
+   */
   public void testExists() throws Exception {
     Dictionary it = new Dictionary();
 
     System.err.println(it.exists("bet"));
 
+  }
+
+  public void testLowercasingOfKeys() throws Exception {
+    Dictionary it = new Dictionary();
+    assertEquals("ehllo", it.toKey("HELLO"));
   }
 }

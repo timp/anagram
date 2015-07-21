@@ -25,7 +25,7 @@
       <item name="Design" href="design.html"/>
       <item name="Usage"  href="usage.html"/>
     </menu>
-    <menu> name="Testing">
+    <menu name="Testing">
       <item name="JaCoCo" href="jacoco" />
     </menu>
 
