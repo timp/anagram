@@ -25,6 +25,20 @@ that there are no faked methods remaining at completion.
  
 ##### The data file is 2.4Mb in size, containing 235886 words on different lines. 
  This is not big by modern standards but a threaded search of the data is specified. 
+
+##### The data file contains proper names and duplicates
+The initial few lines of the data file: 
+```
+A
+a
+aa
+aal
+aalii
+aam
+Aani
+```
+Any capitalised word will be omitted as a proper name during the data load.
+This reduces the number of entries from 215843 to 195763.
  
 ##### Input format
  The system takes a single line of ascii characters as input. The system treats upper and 
@@ -57,9 +71,10 @@ lower case characters as the same.
  
    - [Programming Pearls - Column 2](http://www.it.iitb.ac.in/~deepak/deepak/placement/Programming_pearls.pdf).
    - [The Trie: A Neglected Data Structure](http://www.toptal.com/java/the-trie-a-neglected-data-structure)
-   
+   - [Android Anagrammer](https://github.com/bconniff/Anagram)
 
  We need to know the longest word in the disctionary to establish the fan out of the trie, 
+ which can be discovered by a test.
  
 ###### Parrallelisation
 The tests we have developed so far should still pass after parallelisation.

@@ -2,6 +2,7 @@ package com.github.timp.anagram;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Display all anagrams of a string.
@@ -9,6 +10,10 @@ import java.util.ArrayList;
 public class Anagram {
 
   private Dictionary dictionary;
+
+  public Anagram() throws IOException {
+    dictionary = new Dictionary();
+  }
   /**
    * @param args one or more space eparated strings
    * @return the capitalised results
@@ -58,7 +63,7 @@ public class Anagram {
     }
   }
 
-  public int prunedPermutaions(String str) {
+  public int prunedPermutations(String str) {
     return prunedPermutations("", str);
 
   }
@@ -71,7 +76,10 @@ public class Anagram {
       int ret = 0;
       for (int i = 0; i < n; i++) {
         String nextPrefix =  prefix + str.charAt(i);
-        ret += permutation(nextPrefix, str.substring(0, i) + str.substring(i + 1, n));
+        System.out.println(nextPrefix + ": " + Arrays.toString(dictionary.lookup(nextPrefix)));
+        if (dictionary.lookup(nextPrefix).length != 0) {
+          ret += prunedPermutations(nextPrefix, str.substring(0, i) + str.substring(i + 1, n));
+        }
       }
       return ret;
     }

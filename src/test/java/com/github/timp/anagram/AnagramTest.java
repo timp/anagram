@@ -40,12 +40,27 @@ public class AnagramTest
    * Test to illustrate the impossibility of naive permutations.
    */
   public void testPermutations() {
-    String in = "BenedictCum";
-    for (int i = 0; i < in.length(); i++) {
+    String in = "Bene";
+    for (int i = 0; i <= in.length(); i++) {
 
       System.out.println("Length: " + i);
       System.out.println(in.substring(0,i));
       System.out.println(Anagram.permutation(in.substring(0,i)));
+      System.out.println();
+    }
+  }
+
+  /**
+   * Test to illustrate pruned permutations.
+   */
+  public void testPrunedPermutations() throws Exception  {
+    Anagram it = new Anagram();
+    String in = "Benezz";
+    for (int i = 0; i <= in.length(); i++) {
+
+      System.out.println("Length: " + i);
+      System.out.println(in.substring(0,i));
+      System.out.println(it.prunedPermutations(in.substring(0,i)));
       System.out.println();
     }
   }

@@ -1,16 +1,13 @@
 package com.github.timp.anagram;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * A data structure keyed on alphabetical keys and containing values of lists of
  * valid words which contain exactly the same letters as the key.
- *
+ * <p>
  * It is loaded from a data file on the class path, potentially within a jar.
- *
  */
 public class Dictionary {
 
@@ -23,13 +20,16 @@ public class Dictionary {
   private HashMap<String, ArrayList<String>> store = new HashMap<>(WORD_COUNT);
   private Trie trie = new Trie();
 
-  /** Construct using default file.*/
+  /**
+   * Construct using default file.
+   */
   public Dictionary() throws IOException {
     this("/data/words.txt");
   }
 
   /**
-   *  Construct from a file.
+   * Construct from a file.
+   *
    * @param fileName the name of a file discoverable within the classpath
    */
   private Dictionary(String fileName) throws IOException {
@@ -39,18 +39,22 @@ public class Dictionary {
     String line = inputReader.readLine();
     while (line != null) {
 
-      String orderedKey = toKey(line);
-      if (!store.containsKey(orderedKey)) {
-        store.put(orderedKey, new ArrayList<String>(MAX_COMMON_KEY));
+      if (!Character.isUpperCase(line.charAt(0))) {
+        String orderedKey = toKey(line);
+        if (!store.containsKey(orderedKey)) {
+          store.put(orderedKey, new ArrayList<String>(MAX_COMMON_KEY));
+        }
+        store.get(orderedKey).add(line);
+        trie.add(line);
       }
-      store.get(orderedKey).add(line);
-      trie.add(line);
       line = inputReader.readLine();
     }
   }
 
 
-  /** @return a sorted, lowercased string of letters only */
+  /**
+   * @return a sorted, lowercased string of letters only
+   */
   public String toKey(String line) {
     StringBuilder sb = new StringBuilder();
     for (char c : line.toCharArray()) {
@@ -73,7 +77,9 @@ public class Dictionary {
     return store.size();
   }
 
-  /** @return the entry represented by this key */
+  /**
+   * @return the entry represented by this key
+   */
   public ArrayList<String> get(String query) {
     return store.get(toKey(query));
   }
@@ -95,7 +101,7 @@ public class Dictionary {
   }
 
   /**
-   *  @return the first longest key found
+   * @return the first longest key found
    */
   public String firstLongestKey() {
     int longestSoFar = 0;
@@ -108,4 +114,40 @@ public class Dictionary {
     }
     return firstLongestKey;
   }
+
+
+  private void fillWordSet(Set<String> setToFill,
+                           Trie t,
+                           StringBuilder w,
+                           int requiredLength) {
+    if (t.marksEndOfWord() && requiredLength == 0 ) {
+      setToFill.add(t.getWord());
+    } else {
+      final int wlen = w.length();
+      for (int i = 0; i < wlen; i++) {
+        final Trie ch = t.getChild(w.charAt(i));
+        if (ch != null) {
+          final char c = w.charAt(i);
+          w.deleteCharAt(i);
+          fillWordSet(setToFill, ch, w, requiredLength - 1);
+          w.insert(i, c);
+        }
+      }
+    }
+  }
+
+  private Set<String> lookupSet(String w, int len) {
+    Set<String> result = new HashSet<String>();
+    fillWordSet(result, trie, new StringBuilder(w), len);
+    return result;
+  }
+
+  private String[] lookup(String word, int len) {
+    return lookupSet(word, len).toArray(new String[0]);
+  }
+
+  public String[] lookup(String word) {
+    return lookup(word, word.length());
+  }
+
 }
