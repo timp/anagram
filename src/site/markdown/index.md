@@ -1,3 +1,3 @@
 # Anagram Project
 
-[Task Definition] [task.html]
+A time limited exercise to generate all anagrams from a a user prompted string.
