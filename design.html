@@ -151,6 +151,17 @@
 <h5><a name="The_data_file_is_2.4Mb_in_size_containing_235886_words_on_different_lines."></a>The data file is 2.4Mb in size, containing 235886 words on different lines.</h5>
 <p>This is not big by modern standards but a threaded search of the data is specified. </p></div>
 <div class="section">
+<h5><a name="The_data_file_contains_proper_names_and_duplicates"></a>The data file contains proper names and duplicates</h5>
+<p>The initial few lines of the data file: <tt>
+A
+a
+aa
+aal
+aalii
+aam
+Aani
+</tt> Any capitalised word will be omitted as a proper name during the data load. This reduces the number of entries from 215843 to 195763.</p></div>
+<div class="section">
 <h5><a name="Input_format"></a>Input format</h5>
 <p>The system takes a single line of ascii characters as input. The system treats upper and lower case characters as the same. <i>Note</i> that only ascii characters are catered for, accented unicode characters are not handled.</p></div>
 <div class="section">
@@ -172,8 +183,10 @@
 <li><a class="externalLink" href="http://www.it.iitb.ac.in/~deepak/deepak/placement/Programming_pearls.pdf">Programming Pearls - Column 2</a>.</li>
   
 <li><a class="externalLink" href="http://www.toptal.com/java/the-trie-a-neglected-data-structure">The Trie: A Neglected Data Structure</a></li>
+  
+<li><a class="externalLink" href="https://github.com/bconniff/Anagram">Android Anagrammer</a></li>
 </ul>
-<p>We need to know the longest word in the disctionary to establish the fan out of the trie, </p></div>
+<p>We need to know the longest word in the disctionary to establish the fan out of the trie,  which can be discovered by a test.</p></div>
 <div class="section">
 <h6><a name="Parrallelisation"></a>Parrallelisation</h6>
 <p>The tests we have developed so far should still pass after parallelisation.</p></div></div></div></div></div>
