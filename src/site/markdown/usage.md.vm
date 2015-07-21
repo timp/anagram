@@ -1,0 +1,22 @@
+To build the application and its documentation:
+
+```
+mvn clean install site
+```
+This creates the executable jar which can be executed as follows:
+
+```
+java -jar target/${project.name}-${project.version}.jar
+```
+Or for more convenience on Unix:
+
+```
+chmod + x target/${project.name}-${project.version}.jar
+target/${project.name}-${project.version}.jar
+```
+
+A bash script is supplied:
+
+```
+./build.sh
+```

@@ -50,9 +50,24 @@
   </properties>
 
   <build>
+    <resources>
+      <resource>
+        <directory>${project.basedir}</directory>
+        <targetPath>META-INF</targetPath>
+        <includes>
+          <include>LICENSE</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>${project.basedir}/data</directory>
+        <targetPath>data</targetPath>
+        <includes>
+          <include>words.txt</include>
+        </includes>
+      </resource>
+    </resources>
 
     <plugins>
-
       <plugin>
         <groupId>com.github.github</groupId>
         <artifactId>site-maven-plugin</artifactId>
@@ -70,7 +85,6 @@
           </execution>
         </executions>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>
@@ -92,6 +106,7 @@
             <manifest>
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+              <mainClass>${project.groupId}.${project.artifactId}.${project.name}</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -118,6 +133,16 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.7.5.201505241946</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.7</version>
+      </plugin>
     </plugins>
   </build>
 
@@ -129,6 +154,5 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
 
 </project>
