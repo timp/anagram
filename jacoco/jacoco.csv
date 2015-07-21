@@ -1,4 +1,4 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-Anagram,com.github.timp.anagram,Dictionary,5,364,4,36,1,80,4,29,0,13
+Anagram,com.github.timp.anagram,Dictionary,0,369,3,37,0,81,3,30,0,13
 Anagram,com.github.timp.anagram,Trie,0,80,0,4,0,18,0,9,0,7
 Anagram,com.github.timp.anagram,Anagram,0,213,0,14,0,40,0,14,0,7
