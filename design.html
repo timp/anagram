@@ -186,7 +186,8 @@ Aani
   
 <li><a class="externalLink" href="https://github.com/bconniff/Anagram">Android Anagrammer</a></li>
 </ul>
-<p>We need to know the longest word in the disctionary to establish the fan out of the trie,  which can be discovered by a test.</p></div>
+<p>We need to know the longest word in the disctionary to establish the fan out of the trie,  which can be discovered by a test.</p>
+<p>To cut down the possibility space we will load a Trie with all the strings in the dictionary  and then query that for each generated permutation, pruning branches where there is no entry in  the trie. </p></div>
 <div class="section">
 <h6><a name="Parrallelisation"></a>Parrallelisation</h6>
 <p>The tests we have developed so far should still pass after parallelisation.</p></div></div></div></div></div>
