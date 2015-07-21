@@ -161,10 +161,19 @@
 <p>The problem can be broken into three parts:  finding all anagrams of a word and finding all possible sub-divisions of a string and  lastly implementing the search in parallel. </p>
 <div class="section">
 <h6><a name="Finding_all_anagrams_of_a_string"></a>Finding all anagrams of a string</h6>
-<p>We are given a word list and can build a dictionary from that which is keyed upon a a sorted copy of the string and has a list of all words with the same key. </p></div>
+<p>We are given a word list and can build a dictionary from that which is keyed upon a  sorted copy of the string and has a list of all words with the same key.  To ensure that the Lists holding the valid words for a key are not resized the maximum number of  words to a key was discovered using a test (it is 10).</p></div>
 <div class="section">
 <h6><a name="Finding_all_possible_ways_of_sub_dividing_a_string"></a>Finding all possible ways of sub dividing a string</h6>
-<p>The problem is to generate all permutations of a string and then all possible word boundaries for each permutation.  We hit the combinatorial explosion fairly early! <i>Benedict Cumberbatch</i> is 19 characters  of which there are 19 factorial (121645100408832000) permutations for each one of which  there are a further 19 factorial ways of splitting them into words.  We need to use the dictionalry to cut the search space down.  The recommended technique for dealing with this size problem is to use a data structure  called a trie, a use of which is described in <a class="externalLink" href="http://www.it.iitb.ac.in/~deepak/deepak/placement/Programming_pearls.pdf">Programming Pearls - Column 2</a>.</p></div>
+<p>The problem is to generate all permutations of a string and then all possible word boundaries for each permutation.  We hit the combinatorial explosion fairly early! <i>Benedict Cumberbatch</i> is 19 characters  of which there are 19 factorial (121645100408832000) permutations for each one of which  there are a further 19 factorial ways of splitting them into words. </p>
+<p>We need to use the dictionalry to cut the search space down.  The recommended technique for dealing with this size problem is to use a data structure  called a trie, a use of which is described in the following references: </p>
+
+<ul>
+  
+<li><a class="externalLink" href="http://www.it.iitb.ac.in/~deepak/deepak/placement/Programming_pearls.pdf">Programming Pearls - Column 2</a>.</li>
+  
+<li><a class="externalLink" href="http://www.toptal.com/java/the-trie-a-neglected-data-structure">The Trie: A Neglected Data Structure</a></li>
+</ul>
+<p>We need to know the longest word in the disctionary to establish the fan out of the trie, </p></div>
 <div class="section">
 <h6><a name="Parrallelisation"></a>Parrallelisation</h6>
 <p>The tests we have developed so far should still pass after parallelisation.</p></div></div></div></div></div>
