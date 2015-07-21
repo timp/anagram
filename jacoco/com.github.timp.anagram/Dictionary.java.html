@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Dictionary.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Anagram</a> &gt; <a href="index.source.html" class="el_package">com.github.timp.anagram</a> &gt; <span class="el_source">Dictionary.java</span></div><h1>Dictionary.java</h1><pre class="source lang-java linenums">package com.github.timp.anagram;
+
+import java.io.*;
+import java.util.*;
+
+/**
+ * A data structure keyed on alphabetical keys and containing values of lists of
+ * valid words which contain exactly the same letters as the key.
+ * &lt;p&gt;
+ * It is loaded from a data file on the class path, potentially within a jar.
+ */
+public class Dictionary {
+
+  // The number of words in our dictionary will be bigger than the number of keys
+  // as many words have the same key
+  public static final int WORD_COUNT = 235886;
+  // The largest number of words which share a key, determined by test.
+  private static final int MAX_COMMON_KEY = 10;
+
+<span class="fc" id="L20">  private HashMap&lt;String, ArrayList&lt;String&gt;&gt; store = new HashMap&lt;&gt;(WORD_COUNT);</span>
+<span class="fc" id="L21">  private Trie dictTrie = new Trie();</span>
+
+  /**
+   * Construct using default file.
+   */
+  public Dictionary() throws IOException {
+<span class="fc" id="L27">    this(&quot;/data/words.txt&quot;);</span>
+<span class="fc" id="L28">  }</span>
+
+  /**
+   * Construct from a file.
+   *
+   * @param fileName the name of a file discoverable within the classpath
+   */
+<span class="fc" id="L35">  private Dictionary(String fileName) throws IOException {</span>
+<span class="fc" id="L36">    InputStream input = getClass().getResourceAsStream(fileName);</span>
+<span class="fc" id="L37">    BufferedReader inputReader = new BufferedReader(new InputStreamReader(input));</span>
+    // note that line terminator is not returned
+<span class="fc" id="L39">    String line = inputReader.readLine();</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">    while (line != null) {</span>
+
+<span class="fc bfc" id="L42" title="All 2 branches covered.">      if (!Character.isUpperCase(line.charAt(0))) {</span>
+<span class="fc" id="L43">        String orderedKey = toKey(line);</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (!store.containsKey(orderedKey)) {</span>
+<span class="fc" id="L45">          store.put(orderedKey, new ArrayList&lt;String&gt;(MAX_COMMON_KEY));</span>
+        }
+<span class="fc" id="L47">        store.get(orderedKey).add(line);</span>
+<span class="fc" id="L48">        dictTrie.add(line);</span>
+      }
+<span class="fc" id="L50">      line = inputReader.readLine();</span>
+    }
+<span class="fc" id="L52">  }</span>
+
+
+  /**
+   * The load loop rejects any initail capitalised words
+   * so only lowercase characters are actually encountered.
+   * @return a sorted, lowercased string of letters only
+   */
+  public String toKey(String line) {
+<span class="fc" id="L61">    StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">    for (char c : line.toCharArray()) {</span>
+      // A == 65
+      // Z == 90
+      // a == 97
+      // z == 122
+<span class="pc bpc" id="L67" title="2 of 4 branches missed.">      if (c &gt;= 65 &amp;&amp; c &lt;= 90) {</span>
+<span class="nc" id="L68">        sb.append(c);</span>
+<span class="pc bpc" id="L69" title="2 of 4 branches missed.">      } else if (c &gt;= 97 &amp;&amp; c &lt;= 122) {</span>
+<span class="fc" id="L70">        sb.append(c);</span>
+      }
+    }
+<span class="fc" id="L73">    char[] them = sb.toString().toLowerCase().toCharArray();</span>
+<span class="fc" id="L74">    Arrays.sort(them);</span>
+<span class="fc" id="L75">    return new String(them);</span>
+  }
+
+  public int size() {
+<span class="fc" id="L79">    return store.size();</span>
+  }
+
+  /**
+   * @return the entry represented by this key
+   */
+  public ArrayList&lt;String&gt; get(String query) {
+<span class="fc" id="L86">    return store.get(toKey(query));</span>
+  }
+
+  /**
+   * @return the first key with the largest number of values represented by it
+   */
+  public String firstMostCommonKey() {
+<span class="fc" id="L93">    int mostSoFar = 0;</span>
+<span class="fc" id="L94">    String firstMostCommonKey = &quot;&quot;;</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">    for (String key : store.keySet()) {</span>
+<span class="fc" id="L96">      ArrayList&lt;String&gt; v = store.get(key);</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">      if (v.size() &gt; mostSoFar) {</span>
+<span class="fc" id="L98">        firstMostCommonKey = key;</span>
+<span class="fc" id="L99">        mostSoFar = v.size();</span>
+      }
+<span class="fc" id="L101">    }</span>
+<span class="fc" id="L102">    return firstMostCommonKey;</span>
+  }
+
+  /**
+   * @return the first longest key found
+   */
+  public String firstLongestKey() {
+<span class="fc" id="L109">    int longestSoFar = 0;</span>
+<span class="fc" id="L110">    String firstLongestKey = &quot;&quot;;</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">    for (String key : store.keySet()) {</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">      if (key.length() &gt; longestSoFar) {</span>
+<span class="fc" id="L113">        firstLongestKey = key;</span>
+<span class="fc" id="L114">        longestSoFar = key.length();</span>
+      }
+<span class="fc" id="L116">    }</span>
+<span class="fc" id="L117">    return firstLongestKey;</span>
+  }
+
+
+  /**
+   * Find a word set in the trie.
+   * @param word the word to look for
+   * @return the anagrams found
+   */
+  public String[] lookup(String word) {
+<span class="fc" id="L127">    return lookup(word, word.length());</span>
+  }
+
+
+  /**
+   * Find anagrams of a word.
+   * @param word the word to anagram
+   * @param len the length of legal anagrams or zero to include substrings
+   * @return the anagrams found
+   */
+  private String[] lookup(String word, int len) {
+<span class="fc" id="L138">    return lookupSet(word, len).toArray(new String[0]);</span>
+  }
+
+  /**
+   *
+   * @param word the word to anagram
+   * @param len the length of legal anagrams or zero to include substrings
+   * @return the anagrams found
+   */
+  private Set&lt;String&gt; lookupSet(String word, int len) {
+<span class="fc" id="L148">    Set&lt;String&gt; result = new HashSet&lt;String&gt;();</span>
+<span class="fc" id="L149">    fillWordSet(result, dictTrie, new StringBuilder(word), len);</span>
+<span class="fc" id="L150">    return result;</span>
+  }
+
+  /**
+   *
+   * @param setToFill the set to update
+   * @param t the current trie
+   * @param w the current word
+   * @param requiredLength the length of word required or 0 for substrings
+   */
+  private void fillWordSet(Set&lt;String&gt; setToFill,
+                           Trie t,
+                           StringBuilder w,
+                           int requiredLength) {
+<span class="fc bfc" id="L164" title="All 4 branches covered.">    if (t.marksEndOfWord() &amp;&amp; requiredLength == 0 ) {</span>
+<span class="fc" id="L165">      setToFill.add(t.getWord());</span>
+    } else {
+<span class="fc" id="L167">      final int wlen = w.length();</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">      for (int i = 0; i &lt; wlen; i++) {</span>
+<span class="fc" id="L169">        final Trie ch = t.getChild(w.charAt(i));</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">        if (ch != null) {</span>
+<span class="fc" id="L171">          final char c = w.charAt(i);</span>
+<span class="fc" id="L172">          w.deleteCharAt(i);</span>
+<span class="fc" id="L173">          fillWordSet(setToFill, ch, w, requiredLength - 1);</span>
+<span class="fc" id="L174">          w.insert(i, c);</span>
+        }
+      }
+    }
+<span class="fc" id="L178">  }</span>
+
+
+  /**
+   *
+   * @param query the string to look for in teh dictionary
+   * @return whether this string is in the trie either as completed string or as the start of one
+   */
+  public boolean exists(String query) {
+<span class="fc" id="L187">    return exists(new StringBuilder(query), dictTrie, query.length());</span>
+  }
+
+  private boolean exists(StringBuilder query, Trie trie, int requiredLength) {
+<span class="fc" id="L191">    System.err.println(query);</span>
+<span class="fc" id="L192">    System.err.println(trie.marksEndOfWord());</span>
+<span class="fc" id="L193">    System.err.println(trie.getWord());</span>
+<span class="fc" id="L194">    System.err.println(requiredLength);</span>
+<span class="fc" id="L195">    System.err.println();</span>
+
+<span class="fc bfc" id="L197" title="All 4 branches covered.">    if (trie.marksEndOfWord() &amp;&amp; requiredLength == 0 ) {</span>
+<span class="fc" id="L198">      System.err.println(&quot;Returning true&quot;);</span>
+<span class="fc" id="L199">      return true;</span>
+    } else {
+<span class="fc" id="L201">      boolean hasChild = false;</span>
+<span class="fc" id="L202">      final int wlen = query.length();</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">      for (int i = 0; i &lt; wlen; i++) {</span>
+<span class="fc" id="L204">        final Trie child = trie.getChild(query.charAt(i));</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">        if (child != null) {</span>
+<span class="fc" id="L206">          final char c = query.charAt(i);</span>
+<span class="fc" id="L207">          query.deleteCharAt(i);</span>
+<span class="fc" id="L208">          hasChild = exists(query, child, requiredLength - 1);</span>
+<span class="fc" id="L209">          query.insert(i, c);</span>
+<span class="fc" id="L210">        } else System.err.println(&quot;Null child&quot;);</span>
+      }
+<span class="fc" id="L212">      return hasChild;</span>
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
