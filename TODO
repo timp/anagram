@@ -14,3 +14,6 @@ DONE JDK 7 compatible - Maven enforced
 DONE Should be a maven project, with site generation.
 
 TODO The main filtering of the permutation by the trie
+
+MP: "Load the dictionary into a Trie where each node contains the set of dictionary entries with that make up of letters and you follow the sorted version of the letters down the trie. So you'd insert anagram at aaagmnr.
+     It'll help you with parallelizing the lookup at least as you won't be mutating it at that point."

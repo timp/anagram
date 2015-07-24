@@ -212,4 +212,8 @@ public class Dictionary {
       return hasChild;
     }
   }
+
+  public Set<String> keys() {
+    return store.keySet();
+  }
 }

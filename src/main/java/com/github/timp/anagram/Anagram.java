@@ -3,6 +3,7 @@ package com.github.timp.anagram;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * Display all anagrams of a string.
@@ -20,22 +21,46 @@ public class Anagram {
    * */
   public ArrayList<ArrayList<String>> run(String[] args) throws IOException {
     dictionary = new Dictionary();
-    // TODO fake
+    LetterBag letters = new LetterBag();
+    for (String word : args) {
+      letters.add(word);
+    }
+    HashSet<String> possibles = new HashSet<>();
+    for (String key : dictionary.keys()) {
+      if (letters.contains(key)) {
+        possibles.add(key);
+      }
+    }
+
+    ArrayList<Tree<String>>matches = new ArrayList<>();
+    for (String p : possibles) {
+      matches.add(findMatches(p, possibles, letters));
+    }
+
     ArrayList<ArrayList<String>> them = new ArrayList<>();
-    ArrayList<String> answerOne = new ArrayList<>();
-    answerOne.add("One");
-    answerOne.add("Two");
-    them.add(answerOne);
-    ArrayList<String> answerTwo = new ArrayList<>();
-    answerTwo.add("Three");
-    answerTwo.add("Four");
-    them.add(answerTwo);
+    for (Tree<String> match : matches) {
+      ArrayList<ArrayList<String>> keyPaths = match.flatten();
+      for (ArrayList<String> keyPath: keyPaths) {
+        for (String key : keyPath) {
+          for (String word : dictionary.get(key)) {
+            System.err.println(word);
+            //them.add(word);
+          }
+        }
+      }
+    }
+
     return them;
   }
 
+  private Tree<String> findMatches(String p, HashSet<String> possibles, LetterBag letters) {
+    return new Tree<String>("AA"); //TODO
+  }
+
   /**
-   * @param args one or more space eparated strings
+   * @param args one or more space separated strings
    * */
+
   public static void main(String[] args) throws IOException {
     ArrayList<ArrayList<String>> answers = new Anagram().run(args);
     for (ArrayList<String> answer : answers) {
@@ -44,6 +69,9 @@ public class Anagram {
       }
     }
   }
+
+
+
 
   public static int permutation(String str) {
     return permutation("", str);

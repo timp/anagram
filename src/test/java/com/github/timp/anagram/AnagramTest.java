@@ -65,5 +65,15 @@ public class AnagramTest
     }
   }
 
+/*
+Act The
+Cat The
+Tact He
+Tact Eh
+At Etch
+At Tech
+
+ */
+
 
 }
