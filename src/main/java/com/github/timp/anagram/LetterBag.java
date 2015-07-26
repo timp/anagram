@@ -26,7 +26,6 @@ public class LetterBag {
     return validChar(c) - 97;
   }
 
-
   private String validString(String s) {
     if (s.length() != 1) {
       throw new IllegalArgumentException("Only single charater lookup allowed: '" + s + "''");
@@ -34,26 +33,46 @@ public class LetterBag {
     return s;
   }
 
-  public int getCount(String s) {
-    return getCount(s2c(s));
+  /** @return the number of this letter added */
+  public int count(String s) {
+    return count(s2c(s));
   }
-  public int getCount(char c) {
-    return getCount(cToI(c));
+  /** @return the number of this letter added */
+  public int count(char c) {
+    return count(cToI(c));
   }
-  public int getCount(int i) {
+
+  private int count(int i) {
     return histogram[i];
   }
 
-  public void setCount(int i, int v) {
-    histogram[i] = v;
+  /** @return the total number of items added */
+  public int count() {
+    int count = 0;
+    for (int i = 0; i< 26; i++) {
+      count += histogram[i];
+    }
+    return count;
   }
 
+  /**
+   * Remove a list of characters.
+   *
+   * @param s the letters to remove
+   * @return this after removal
+   */
   public LetterBag remove(String s) {
     for (String single : s.split("")) {
       remove(s2c(single));
     }
     return this;
   }
+
+  /**
+   * Remove a single character.
+   * @retunr this after removal
+   */
+
   public LetterBag remove(char c) {
     if (histogram[cToI(c)] == 0) {
       throw new IllegalStateException("Cannot remove from empty");
@@ -62,15 +81,11 @@ public class LetterBag {
     return this;
   }
 
-  @Override
-  protected Object clone() {
-    LetterBag it =  new LetterBag();
-    for (int i = 0; i < 26; i++) {
-      it.setCount(i, histogram[i]);
-    }
-    return it;
-  }
-
+  /**
+   *
+   * @param word the word to check
+   * @return whether this word could be made from the letters in this
+   */
   public boolean contains(String word) {
     LetterBag mutable = (LetterBag) this.clone();
     try {
@@ -81,6 +96,19 @@ public class LetterBag {
       return false;
     }
     return true;
+  }
+
+  private void setCount(int i, int v) {
+    histogram[i] = v;
+  }
+
+  @Override
+  protected Object clone() {
+    LetterBag it =  new LetterBag();
+    for (int i = 0; i < 26; i++) {
+      it.setCount(i, histogram[i]);
+    }
+    return it;
   }
 
   @Override
@@ -98,5 +126,9 @@ public class LetterBag {
       sb.append(histogram[i]);
     }
     return sb.toString();
+  }
+
+  public LetterBag copy() {
+    return (LetterBag)clone();
   }
 }

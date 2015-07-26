@@ -15,7 +15,9 @@ public class DictionaryTest
     Dictionary it = new Dictionary();
     // As some words share a key the size will be smaller than the
     assertTrue(it.size() < Dictionary.WORD_COUNT);
-    assertEquals(195763, it.size());
+    // Initial size 195763
+    // Current, cut down size
+    assertEquals(195112, it.size());
   }
 
   /** Test to discover the best initial value for common words list. */
@@ -87,5 +89,28 @@ public class DictionaryTest
   public void testLowercasingOfKeys() throws Exception {
     Dictionary it = new Dictionary();
     assertEquals("ehllo", it.toKey("HELLO"));
+  }
+
+  public void testOneLetterWords() throws Exception {
+    Dictionary it = new Dictionary();
+    String them = "";
+    for (String word : it.keys()) {
+      if (word.length() == 1 ) {
+        them += word;
+      }
+    }
+    assertEquals("ai", them);
+  }
+
+  public void testTwoLetterWords() throws Exception {
+    Dictionary it = new Dictionary();
+    String them = "";
+    for (String word : it.keys()) {
+      if (word.length() == 2 ) {
+        them += word;
+        them += ",";
+      }
+    }
+    assertEquals("am,an,as,at,be,by,do,eg,eh,ei,em,ew,ex,ey,fi,fo,go,hi,in,ip,is,it,ko,lo,my,no,or,os,ot,ox,pu,st,su,", them);
   }
 }

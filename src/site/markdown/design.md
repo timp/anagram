@@ -39,6 +39,11 @@ Aani
 ```
 Any capitalised word will be omitted as a proper name during the data load.
 This reduces the number of entries from 215843 to 195763.
+There are many other words in teh dictionary which are not English 
+but the problematic entries are the single and double letter words which are not english. 
+These give false positives and force the system to divide on every letter. 
+All invalid English one and two letter words, identified with a test, 
+have been removed by hand.
  
 ##### Input format
  The system takes a single line of ascii characters as input. The system treats upper and 
