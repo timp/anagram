@@ -79,7 +79,7 @@ public class LetterBag {
 
   /**
    * Remove a single character.
-   * @retunr this after removal
+   * @return this after removal
    */
 
   public LetterBag remove(char c) {
