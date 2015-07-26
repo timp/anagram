@@ -11,8 +11,8 @@ import java.util.*;
  */
 public class Dictionary {
 
-  // The number of words in our dictionary will be bigger than the number of keys
-  // as many words have the same key
+  // The number of words in our dictionary will be bigger than
+  // the number of keys as many words have the same key
   public static final int WORD_COUNT = 235886;
   // The largest number of words which share a key, determined by test.
   private static final int MAX_COMMON_KEY = 10;
@@ -57,7 +57,7 @@ public class Dictionary {
    * so only lowercase characters are actually encountered.
    * @return a sorted, lowercased string of letters only
    */
-  public String toKey(String line) {
+  public static String toKey(String line) {
     StringBuilder sb = new StringBuilder();
     for (char c : line.toCharArray()) {
       // A == 65
@@ -75,6 +75,9 @@ public class Dictionary {
     return new String(them);
   }
 
+  /**
+   * @return the number of keys in the Dictionary
+   */
   public int size() {
     return store.size();
   }
@@ -180,7 +183,7 @@ public class Dictionary {
 
   /**
    *
-   * @param query the string to look for in teh dictionary
+   * @param query the string to look for in the dictionary
    * @return whether this string is in the trie either as completed string or as the start of one
    */
   public boolean exists(String query) {
