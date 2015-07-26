@@ -1,12 +1,21 @@
 package com.github.timp.anagram;
 
 /**
- * Created by timp on 22/07/15.
+ * An unordered collection of letters, which stores the number of occurrences
+ * of each letter.
+ *
+ * Lowercase ascii letters are assumed.
+ *
  */
 public class LetterBag {
 
   int[] histogram = new int[26];
 
+  /**
+   * Add the word to the letter counts.
+   *
+   * @param word the string to count the letters of
+   */
   public void add(String word) {
     for (char c : word.toLowerCase().toCharArray()) {
       histogram[cToI(validChar(c))] += 1;
@@ -82,7 +91,6 @@ public class LetterBag {
   }
 
   /**
-   *
    * @param word the word to check
    * @return whether this word could be made from the letters in this
    */
