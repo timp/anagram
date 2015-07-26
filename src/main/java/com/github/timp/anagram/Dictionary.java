@@ -39,8 +39,9 @@ public class Dictionary {
     String line = inputReader.readLine();
     while (line != null) {
 
+      // Exclude proper names from the dictionary
       if (!Character.isUpperCase(line.charAt(0))) {
-        String orderedKey = toKey(line);
+        String orderedKey = Anagram.toKey(line);
         if (!store.containsKey(orderedKey)) {
           store.put(orderedKey, new ArrayList<String>(MAX_COMMON_KEY));
         }
@@ -53,29 +54,6 @@ public class Dictionary {
 
 
   /**
-   * The load loop rejects any initail capitalised words
-   * so only lowercase characters are actually encountered.
-   * @return a sorted, lowercased string of letters only
-   */
-  public static String toKey(String line) {
-    StringBuilder sb = new StringBuilder();
-    for (char c : line.toCharArray()) {
-      // A == 65
-      // Z == 90
-      // a == 97
-      // z == 122
-      if (c >= 65 && c <= 90) {
-        sb.append(c);
-      } else if (c >= 97 && c <= 122) {
-        sb.append(c);
-      }
-    }
-    char[] them = sb.toString().toLowerCase().toCharArray();
-    Arrays.sort(them);
-    return new String(them);
-  }
-
-  /**
    * @return the number of keys in the Dictionary
    */
   public int size() {
@@ -85,8 +63,9 @@ public class Dictionary {
   /**
    * @return the entry represented by this key
    */
-  public ArrayList<String> get(String query) {
-    return store.get(toKey(query));
+  public Anagram get(String query) {
+
+    return new Anagram(query, store.get(Anagram.toKey(query)));
   }
 
   /**

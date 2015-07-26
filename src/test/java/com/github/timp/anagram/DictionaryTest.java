@@ -17,7 +17,7 @@ public class DictionaryTest
     assertTrue(it.size() < Dictionary.WORD_COUNT);
     // Initial size 195763
     // Current, cut down size
-    assertEquals(195112, it.size());
+    assertEquals(195081, it.size());
   }
 
   /** Test to discover the best initial value for common words list. */
@@ -25,7 +25,7 @@ public class DictionaryTest
     Dictionary it = new Dictionary();
     String mostCommonKey = it.firstMostCommonKey();
     assertEquals("acert", mostCommonKey);
-    ArrayList<String> them = it.get(mostCommonKey);
+    ArrayList<String> them = it.get(mostCommonKey).words();
     assertEquals(9, them.size());
   }
 
@@ -36,7 +36,7 @@ public class DictionaryTest
      Dictionary it = new Dictionary();
      String firstLongestKey = it.firstLongestKey();
      assertEquals("acccefhhiiiiillnoooppsst", firstLongestKey);
-     ArrayList<String> them = it.get(firstLongestKey);
+     ArrayList<String> them = it.get(firstLongestKey).words();
      assertEquals("[scientificophilosophical]", them.toString());
      assertEquals(24, firstLongestKey.length());
 
@@ -45,21 +45,21 @@ public class DictionaryTest
   /** The list of possibilities will itself if query is valid word. */
   public void testSilentListen() throws Exception {
     Dictionary it = new Dictionary();
-    assertTrue(it.get("silent").contains("listen"));
-    assertTrue(it.get("silent").contains("tinsel"));
-    assertTrue(it.get("silent").contains("silent"));
+    assertTrue(it.get("silent").words().contains("listen"));
+    assertTrue(it.get("silent").words().contains("tinsel"));
+    assertTrue(it.get("silent").words().contains("silent"));
 
-    assertTrue(it.get("listen").contains("silent"));
-    assertTrue(it.get("listen").contains("tinsel"));
-    assertTrue(it.get("listen").contains("listen"));
+    assertTrue(it.get("listen").words().contains("silent"));
+    assertTrue(it.get("listen").words().contains("tinsel"));
+    assertTrue(it.get("listen").words().contains("listen"));
 
-    assertTrue(it.get("tinsel").contains("listen"));
-    assertTrue(it.get("tinsel").contains("listen"));
-    assertTrue(it.get("tinsel").contains("tinsel"));
+    assertTrue(it.get("tinsel").words().contains("listen"));
+    assertTrue(it.get("tinsel").words().contains("listen"));
+    assertTrue(it.get("tinsel").words().contains("tinsel"));
 
     // if key is not a valid word it is not included in results
-    assertEquals("[enlist, listen, silent, tinsel]", it.get("listne").toString());
-    assertFalse(it.get("listne").contains("listne"));
+    assertEquals("[enlist, listen, silent, tinsel]", it.get("listne").words().toString());
+    assertFalse(it.get("listne").words().contains("listne"));
 
   }
 
@@ -86,11 +86,6 @@ public class DictionaryTest
 
   }
 
-  public void testLowercasingOfKeys() throws Exception {
-    Dictionary it = new Dictionary();
-    assertEquals("ehllo", it.toKey("HELLO"));
-  }
-
   public void testOneLetterWords() throws Exception {
     Dictionary it = new Dictionary();
     String them = "";
@@ -111,6 +106,6 @@ public class DictionaryTest
         them += ",";
       }
     }
-    assertEquals("am,an,as,at,be,by,do,eg,eh,ei,em,ew,ex,ey,fi,fo,go,hi,in,ip,is,it,ko,lo,my,no,or,os,ot,ox,pu,st,su,", them);
+    assertEquals("am,an,as,at,be,by,do,eg,eh,ei,em,ew,ex,ey,fi,fo,go,hi,in,ip,is,it,ko,lo,my,no,or,os,ot,ox,pu,su,", them);
   }
 }
