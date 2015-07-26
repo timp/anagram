@@ -13,7 +13,15 @@ import java.util.Collections;
  */
 public class ComparableSearchRepresentation {
 
-  ArrayList<String> terms = new ArrayList<>();
+  ArrayList<String> terms;
+
+  public ComparableSearchRepresentation() {
+    terms = new ArrayList<>();
+  }
+
+  public ComparableSearchRepresentation(ArrayList<String> terms) {
+    this.terms = terms;
+  }
 
   public ComparableSearchRepresentation add(String term) {
     terms.add(term);
