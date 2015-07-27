@@ -21,13 +21,27 @@ public class AnagrammerTest
   /**
    * Test that the application returns expected results.
    */
-  public void testAnagram() throws Exception {
+  public void testAnagrammer() throws Exception {
     Anagrammer it = new Anagrammer();
-//    ArrayList<ArrayList<String>> results = it.run(new String[]{"Benedict", "Cumberbatch"});
-//    ArrayList<ArrayList<String>> results = it.run(new String[]{"Benedict", "Cu"});
-    ArrayList<ArrayList<String>> results = it.run(new String[]{"cat", "sat", "mat"});
-    System.err.println(results);
-    //TODO
+//    ArrayList<String> results = it.run(new String[]{"Benedict", "Cumberbatch"});
+// 1'14''
+//    ArrayList<String> results = it.run(new String[]{"Benedict", "Cumbe"});
+
+    // 3s
+    ArrayList<String> results = it.run(new String[]{"anagram"});
+    // TODO remove repetition
+    assertEquals("[" +
+        "A Man Rag, A Gram An, A Arm Nag, A Ram Nag, A Rang Am, A Rang Ma, A Ragman, " +
+        "A Man Rag, A Gram An, A Arm Nag, A Ram Nag, A Rang Am, A Rang Ma, A Ragman, " +
+        "A Man Rag, A Gram An, A Arm Nag, A Ram Nag, A Rang Am, A Rang Ma, A Ragman, " +
+        "A Man Rag, A Gram An, A Arm Nag, A Ram Nag, A Rang Am, A Rang Ma, A Ragman, " +
+        "A Man Rag, A Gram An, A Arm Nag, A Ram Nag, A Rang Am, A Rang Ma, A Ragman, " +
+        "Anagram, Man Agar, Man Raga, Arm Naga, Ram Naga, Rang Ama, Amar Nag, Amra Nag, " +
+        "Am An Rag, Ma An Rag, Anam Rag, Mana Rag]", results.toString());
+
+    // 0.0005s
+//    ArrayList<String> results = it.run(new String[]{"cat", "the"});
+//    assertEquals("[Etch At, Tech At, A Tetch, He Tact, The Act, The Cat]", results);
   }
 
 

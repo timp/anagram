@@ -17,7 +17,7 @@ public class DictionaryTest
     assertTrue(it.size() < Dictionary.WORD_COUNT);
     // Initial size 195763
     // Current, cut down size
-    assertEquals(195081, it.size());
+    assertEquals(195016, it.size());
   }
 
   /** Test to discover the best initial value for common words list. */
@@ -77,6 +77,7 @@ public class DictionaryTest
 
   /**
    * TODO this is incomplete
+   * TODO delete this
    * @throws Exception
    */
   public void testExists() throws Exception {
@@ -107,5 +108,38 @@ public class DictionaryTest
       }
     }
     assertEquals("am,an,as,at,be,by,do,eg,eh,ei,em,ew,ex,ey,fi,fo,go,hi,in,ip,is,it,ko,lo,my,no,or,os,ot,ox,pu,su,", them);
+  }
+
+  public void testCapitalised() {
+    assertEquals("Fred", Dictionary.capitalised("fred"));
+  }
+
+  public void testOutput() throws Exception {
+    Dictionary it = new Dictionary();
+
+    assertEquals("[]", it.output(new Tree<String>(null)).toString());
+
+    Tree<String> tree = new Tree<String>(null);
+    Tree ant = tree.add("ant");
+    assertEquals("[Ant, Tan]", it.output(tree).toString());
+    ant.add("aet").add("act");
+    assertEquals(
+       "[Ant Ate Act, " +
+        "Ant Ate Cat, " +
+        "Ant Eat Act, " +
+        "Ant Eat Cat, " +
+        "Ant Tae Act, " +
+        "Ant Tae Cat, " +
+        "Ant Tea Act, " +
+        "Ant Tea Cat, " +
+        "Tan Ate Act, " +
+        "Tan Ate Cat, " +
+        "Tan Eat Act, " +
+        "Tan Eat Cat, " +
+        "Tan Tae Act, " +
+        "Tan Tae Cat, " +
+        "Tan Tea Act, " +
+        "Tan Tea Cat]", it.output(tree).toString());
+
   }
 }

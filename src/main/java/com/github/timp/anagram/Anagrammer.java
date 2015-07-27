@@ -21,11 +21,14 @@ public class Anagrammer {
    * @param args one or more space separated strings
    * @return the capitalised results
    * */
-  public ArrayList<ArrayList<String>> run(String[] args) throws IOException {
+  public ArrayList<String> run(String[] args) throws IOException {
+    // Populate our dictionary from file
     dictionary = new Dictionary();
+
+
+    // Filter out impossible words from dictionary
     LetterBag letters = new LetterBag();
     for (String word : args) {
-      System.err.println(word);
       letters.add(word);
     }
     HashSet<String> possibles = new HashSet<>();
@@ -35,36 +38,21 @@ public class Anagrammer {
       }
     }
 
+
     Set<String> searches = new HashSet<>();
+    AnagramKeyTree resultTree = new AnagramKeyTree();
     ArrayList<ArrayList<String>>matches = new ArrayList<>();
     for (String p : possibles) {
 
       ArrayList<String> keys = new ArrayList<>();
-      if (new Query(searches, keys, p, possibles, letters).producesResults()) {
-
-        System.err.println("Found matches: " + keys);
+      Query q = new Query(resultTree, searches, keys, p, possibles, letters);
+      if (q.producesResults()) {
 
         matches.add(keys);
       }
     }
 
-    ArrayList<ArrayList<String>> them = new ArrayList<>();
-    for (ArrayList<String> match : matches) {
-      System.err.println("Match: " + match);
-      /*
-      ArrayList<ArrayList<String>> keyPaths = match.flatten();
-      for (ArrayList<String> keyPath: keyPaths) {
-        for (String key : keyPath) {
-          for (String word : dictionary.get(key)) {
-            System.err.println(word);
-            //them.add(word);
-          }
-        }
-      }
-      */
-    }
-
-    return them;
+    return dictionary.output(resultTree);
   }
 
 
@@ -73,12 +61,10 @@ public class Anagrammer {
    * */
 
   public static void main(String[] args) throws IOException {
-    ArrayList<ArrayList<String>> answers = new Anagrammer().run(args);
-    for (ArrayList<String> answer : answers) {
-      for (String item : answer) {
-        System.out.println(item);
+    ArrayList<String> answers = new Anagrammer().run(args);
+      for (String line : answers) {
+        System.out.println(line);
       }
-    }
   }
 
 
@@ -102,10 +88,12 @@ public class Anagrammer {
     }
   }
 
+  // TODO Delete
   public int prunedPermutations(String str) {
     return prunedPermutations("", str);
-
   }
+
+  // TODO Delete
   private int prunedPermutations(String prefix, String str) {
     int n = str.length();
     if (n == 0) {

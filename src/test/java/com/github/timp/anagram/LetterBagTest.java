@@ -6,6 +6,10 @@ public class LetterBagTest extends TestCase{
 
   public void testAdd(){
     LetterBag it = new LetterBag();
+    try {
+      it.add("-");
+      fail("Should have bombed");
+    } catch (IllegalArgumentException e) {}
     it.add("cat");
     assertEquals(1, it.count("a"));
     it.add("sat");
@@ -48,6 +52,7 @@ public class LetterBagTest extends TestCase{
     assertEquals(6, it.count("a"));
 
   }
+
   public void testContains() {
     LetterBag it = new LetterBag();
     it.add("cat");
@@ -55,4 +60,24 @@ public class LetterBagTest extends TestCase{
     assertFalse(it.contains("bat"));
   }
 
+  public void testToString(){
+    LetterBag it = new LetterBag();
+    assertEquals("a:0,b:0,c:0,d:0,e:0,f:0,g:0,h:0,i:0,j:0,k:0,l:0,m:0,n:0,o:0,p:0,q:0,r:0,s:0,t:0,u:0,v:0,w:0,x:0,y:0,z:0", it.toString());
+    it.add("cat");
+    assertEquals("a:1,b:0,c:1,d:0,e:0,f:0,g:0,h:0,i:0,j:0,k:0,l:0,m:0,n:0,o:0,p:0,q:0,r:0,s:0,t:1,u:0,v:0,w:0,x:0,y:0,z:0", it.toString());
+  }
+
+  public void testCount() {
+    LetterBag it = new LetterBag();
+    try {
+      it.count("-");
+      fail("Should have bombed");
+    } catch (IllegalArgumentException e) {}
+
+    try {
+      it.count("abc");
+      fail("Should have bombed");
+    } catch (IllegalArgumentException e) {}
+
+  }
 }
