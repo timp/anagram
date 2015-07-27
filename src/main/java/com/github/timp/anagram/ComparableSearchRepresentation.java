@@ -21,6 +21,7 @@ public class ComparableSearchRepresentation {
 
   public ComparableSearchRepresentation(ArrayList<String> terms) {
     this.terms = terms;
+    Collections.sort(this.terms);
   }
 
   public ComparableSearchRepresentation add(String term) {
