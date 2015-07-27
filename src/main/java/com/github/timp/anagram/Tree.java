@@ -1,7 +1,7 @@
 package com.github.timp.anagram;
 
 import java.util.ArrayList;
-
+/** A multi branching tree. */
 public class Tree<T> {
   T value;
   ArrayList<Tree<T>> children;
@@ -31,14 +31,6 @@ public class Tree<T> {
 
   public boolean isLeaf() {
     return children.size() == 0;
-  }
-
-  public ArrayList<ArrayList<T>> flatten() {
-    ArrayList<ArrayList<T>> it = new ArrayList<>();
-    for (Tree<T> child : children) {
-      it.addAll(child.flatten());
-    }
-    return it;
   }
 
   public String toString() {
