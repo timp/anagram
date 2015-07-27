@@ -51,7 +51,7 @@ public class Anagram {
    *
    * @return the words allowed for this collection of letters.
    */
-  public ArrayList words() {
+  public ArrayList<String> words() {
     return words;
   }
   /**
