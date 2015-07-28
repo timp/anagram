@@ -1,89 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Anagram.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Anagram</a> &gt; <a href="index.source.html" class="el_package">com.github.timp.anagram</a> &gt; <span class="el_source">Anagram.java</span></div><h1>Anagram.java</h1><pre class="source lang-java linenums">package com.github.timp.anagram;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Display all anagrams of a string.
+ * An Anagram from https://en.wikipedia.org/wiki/Anagram.
+ * &quot;An anagram is a type of word play, the result of rearranging
+ * the letters of a word or phrase to produce a new word or phrase,
+ * using all the original letters exactly once;
+ * for example, the word anagram can be rearranged into nag-a-ram.&quot;
+ *
+ * This class represents all the words, from an assumed closed set of words (dictionary)
+ * that can be represented by a sequence of letters.
+ *
+ * This class assumes lowercase ASCII letters.
+ *
  */
 public class Anagram {
 
-  private Dictionary dictionary;
 
-<span class="fc" id="L14">  public Anagram() throws IOException {</span>
-<span class="fc" id="L15">    dictionary = new Dictionary();</span>
-<span class="fc" id="L16">  }</span>
-  /**
-   * @param args one or more space eparated strings
-   * @return the capitalised results
-   * */
-  public ArrayList&lt;ArrayList&lt;String&gt;&gt; run(String[] args) throws IOException {
-<span class="fc" id="L22">    dictionary = new Dictionary();</span>
-    // TODO fake
-<span class="fc" id="L24">    ArrayList&lt;ArrayList&lt;String&gt;&gt; them = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L25">    ArrayList&lt;String&gt; answerOne = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L26">    answerOne.add(&quot;One&quot;);</span>
-<span class="fc" id="L27">    answerOne.add(&quot;Two&quot;);</span>
-<span class="fc" id="L28">    them.add(answerOne);</span>
-<span class="fc" id="L29">    ArrayList&lt;String&gt; answerTwo = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L30">    answerTwo.add(&quot;Three&quot;);</span>
-<span class="fc" id="L31">    answerTwo.add(&quot;Four&quot;);</span>
-<span class="fc" id="L32">    them.add(answerTwo);</span>
-<span class="fc" id="L33">    return them;</span>
-  }
+  private String key;
+  private ArrayList&lt;String&gt; words;
 
   /**
-   * @param args one or more space eparated strings
-   * */
-  public static void main(String[] args) throws IOException {
-<span class="fc" id="L40">    ArrayList&lt;ArrayList&lt;String&gt;&gt; answers = new Anagram().run(args);</span>
-<span class="fc bfc" id="L41" title="All 2 branches covered.">    for (ArrayList&lt;String&gt; answer : answers) {</span>
-<span class="fc bfc" id="L42" title="All 2 branches covered.">      for (String item : answer) {</span>
-<span class="fc" id="L43">        System.out.println(item);</span>
-<span class="fc" id="L44">      }</span>
-<span class="fc" id="L45">    }</span>
-<span class="fc" id="L46">  }</span>
+   *
+   * @param example the key or example, it is not added to word list automatically
+   * @param words the current words
+   */
+<span class="fc" id="L30">  public Anagram(String example, ArrayList&lt;String&gt; words) {</span>
+<span class="fc" id="L31">    this.key = toKey(example);</span>
+<span class="fc" id="L32">    this.words = words;</span>
+<span class="fc" id="L33">  }</span>
 
-  public static int permutation(String str) {
-<span class="fc" id="L49">    return permutation(&quot;&quot;, str);</span>
+  /**
+   *
+   * @param example the key or example, it is not added to word list automatically
+   */
+  public Anagram(String example) {
+<span class="fc" id="L40">    this(example, new ArrayList&lt;String&gt;());</span>
+<span class="fc" id="L41">  }</span>
+
+  /**
+   * @return The alphabetically ordered sequence of our letters.
+   */
+  public String key() {
+<span class="fc" id="L47">    return key;</span>
   }
 
-  private static int permutation(String prefix, String str) {
-<span class="fc" id="L53">    int n = str.length();</span>
-<span class="fc bfc" id="L54" title="All 2 branches covered.">    if (n == 0) {</span>
-      //System.out.println(prefix);
-<span class="fc" id="L56">      return 1;</span>
-    } else {
-<span class="fc" id="L58">      int ret = 0;</span>
-<span class="fc bfc" id="L59" title="All 2 branches covered.">      for (int i = 0; i &lt; n; i++) {</span>
-<span class="fc" id="L60">        ret += permutation(prefix + str.charAt(i), str.substring(0, i) + str.substring(i + 1, n));</span>
+  /**
+   *
+   * @return the words allowed for this collection of letters.
+   */
+  public ArrayList&lt;String&gt; words() {
+<span class="fc" id="L55">    return words;</span>
+  }
+  /**
+   * NOTE: The current Dictionary load loop rejects any initial capitalised words
+   * so only lowercase characters are actually encountered.
+   * @return a sorted, lowercased string of letters only
+   */
+  public static String toKey(String line) {
+<span class="fc" id="L63">    StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">    for (char c : line.toCharArray()) {</span>
+      // A == 65
+      // Z == 90
+      // a == 97
+      // z == 122
+<span class="pc bpc" id="L69" title="1 of 4 branches missed.">      if (c &gt;= 65 &amp;&amp; c &lt;= 90) {</span>
+<span class="fc" id="L70">        sb.append(c);</span>
+<span class="pc bpc" id="L71" title="2 of 4 branches missed.">      } else if (c &gt;= 97 &amp;&amp; c &lt;= 122) {</span>
+<span class="fc" id="L72">        sb.append(c);</span>
       }
-<span class="fc" id="L62">      return ret;</span>
     }
+<span class="fc" id="L75">    char[] them = sb.toString().toLowerCase().toCharArray();</span>
+<span class="fc" id="L76">    Arrays.sort(them);</span>
+<span class="fc" id="L77">    return new String(them);</span>
   }
 
-  public int prunedPermutations(String str) {
-<span class="fc" id="L67">    return prunedPermutations(&quot;&quot;, str);</span>
-
-  }
-  private int prunedPermutations(String prefix, String str) {
-<span class="fc" id="L71">    int n = str.length();</span>
-<span class="fc bfc" id="L72" title="All 2 branches covered.">    if (n == 0) {</span>
-      //System.out.println(prefix);
-<span class="fc" id="L74">      return 1;</span>
-    } else {
-<span class="fc" id="L76">      int ret = 0;</span>
-<span class="fc bfc" id="L77" title="All 2 branches covered.">      for (int i = 0; i &lt; n; i++) {</span>
-<span class="fc" id="L78">        String nextPrefix =  prefix + str.charAt(i);</span>
-<span class="fc" id="L79">        System.out.println(nextPrefix + &quot;: &quot; + Arrays.toString(dictionary.lookup(nextPrefix)));</span>
-<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (dictionary.lookup(nextPrefix).length != 0) {</span>
-<span class="fc" id="L81">          ret += prunedPermutations(nextPrefix, str.substring(0, i) + str.substring(i + 1, n));</span>
-        }
-      }
-<span class="fc" id="L84">      return ret;</span>
-    }
-  }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

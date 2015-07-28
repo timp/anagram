@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>LetterBag.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Anagram</a> &gt; <a href="index.source.html" class="el_package">com.github.timp.anagram</a> &gt; <span class="el_source">LetterBag.java</span></div><h1>LetterBag.java</h1><pre class="source lang-java linenums">package com.github.timp.anagram;
+
+/**
+ * An unordered collection of letters, which stores the number of occurrences
+ * of each letter.
+ *
+ * Lowercase ascii letters are assumed.
+ *
+ */
+<span class="fc" id="L10">public class LetterBag {</span>
+
+<span class="fc" id="L12">  int[] histogram = new int[26];</span>
+
+  /**
+   * Add the word to the letter counts.
+   *
+   * @param word the string to count the letters of
+   */
+  public void add(String word) {
+<span class="fc bfc" id="L20" title="All 2 branches covered.">    for (char c : word.toLowerCase().toCharArray()) {</span>
+<span class="fc" id="L21">      histogram[cToI(validChar(c))] += 1;</span>
+    }
+<span class="fc" id="L23">  }</span>
+
+  private char validChar(char c) {
+<span class="pc bpc" id="L26" title="1 of 4 branches missed.">    if (c &lt; 97 || c &gt; 122) {</span>
+<span class="fc" id="L27">      throw new IllegalArgumentException(&quot;Only lowercase letters allowed: '&quot; + c + &quot;'&quot;);</span>
+    }
+<span class="fc" id="L29">    return c;</span>
+  }
+  private char s2c(String s) {
+<span class="fc" id="L32">    return validString(s).charAt(0);</span>
+  }
+  private int cToI(char c) {
+<span class="fc" id="L35">    return validChar(c) - 97;</span>
+  }
+
+  private String validString(String s) {
+<span class="fc bfc" id="L39" title="All 2 branches covered.">    if (s.length() != 1) {</span>
+<span class="fc" id="L40">      throw new IllegalArgumentException(&quot;Only single charater lookup allowed: '&quot; + s + &quot;''&quot;);</span>
+    }
+<span class="fc" id="L42">    return s;</span>
+  }
+
+  /** @return the number of this letter added */
+  public int count(String s) {
+<span class="fc" id="L47">    return count(s2c(s));</span>
+  }
+  /** @return the number of this letter added */
+  public int count(char c) {
+<span class="fc" id="L51">    return count(cToI(c));</span>
+  }
+
+  private int count(int i) {
+<span class="fc" id="L55">    return histogram[i];</span>
+  }
+
+  /** @return the total number of items added */
+  public int count() {
+<span class="fc" id="L60">    int count = 0;</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">    for (int i = 0; i&lt; 26; i++) {</span>
+<span class="fc" id="L62">      count += histogram[i];</span>
+    }
+<span class="fc" id="L64">    return count;</span>
+  }
+
+  /**
+   * Remove a list of characters.
+   *
+   * @param s the letters to remove
+   * @return this after removal
+   */
+  public LetterBag remove(String s) {
+<span class="fc bfc" id="L74" title="All 2 branches covered.">    for (String single : s.split(&quot;&quot;)) {</span>
+<span class="fc" id="L75">      remove(s2c(single));</span>
+    }
+<span class="fc" id="L77">    return this;</span>
+  }
+
+  /**
+   * Remove a single character.
+   * @return this after removal
+   */
+
+  public LetterBag remove(char c) {
+<span class="fc bfc" id="L86" title="All 2 branches covered.">    if (histogram[cToI(c)] == 0) {</span>
+<span class="fc" id="L87">      throw new IllegalStateException(&quot;Cannot remove from empty&quot;);</span>
+    }
+<span class="fc" id="L89">    histogram[cToI(c)]--;</span>
+<span class="fc" id="L90">    return this;</span>
+  }
+
+  /**
+   * @param word the word to check
+   * @return whether this word could be made from the letters in this
+   */
+  public boolean contains(String word) {
+<span class="fc" id="L98">    LetterBag mutable = (LetterBag) this.clone();</span>
+    try {
+<span class="fc bfc" id="L100" title="All 2 branches covered.">      for (char c : word.toCharArray()) {</span>
+<span class="fc" id="L101">        mutable.remove(c);</span>
+      }
+<span class="fc" id="L103">    } catch (IllegalStateException e) {</span>
+<span class="fc" id="L104">      return false;</span>
+<span class="fc" id="L105">    }</span>
+<span class="fc" id="L106">    return true;</span>
+  }
+
+  private void setCount(int i, int v) {
+<span class="fc" id="L110">    histogram[i] = v;</span>
+<span class="fc" id="L111">  }</span>
+
+  @Override
+  protected Object clone() {
+<span class="fc" id="L115">    LetterBag it =  new LetterBag();</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">    for (int i = 0; i &lt; 26; i++) {</span>
+<span class="fc" id="L117">      it.setCount(i, histogram[i]);</span>
+    }
+<span class="fc" id="L119">    return it;</span>
+  }
+
+  @Override
+  public String toString() {
+<span class="fc" id="L124">    StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L125">    boolean first = true;</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">    for (int i = 0; i &lt; 26; i++) {</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">      if (first) {</span>
+<span class="fc" id="L128">        first = false;</span>
+      } else {
+<span class="fc" id="L130">        sb.append(',');</span>
+      }
+<span class="fc" id="L132">      sb.append((char) (97 + i));</span>
+<span class="fc" id="L133">      sb.append(':');</span>
+<span class="fc" id="L134">      sb.append(histogram[i]);</span>
+    }
+<span class="fc" id="L136">    return sb.toString();</span>
+  }
+
+  public LetterBag copy() {
+<span class="fc" id="L140">    return (LetterBag)clone();</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Query.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Anagram</a> &gt; <a href="index.source.html" class="el_package">com.github.timp.anagram</a> &gt; <span class="el_source">Query.java</span></div><h1>Query.java</h1><pre class="source lang-java linenums">package com.github.timp.anagram;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+public class Query {
+  private final Set searchesSoFar;
+  private final Tree&lt;String&gt; keyTree;
+  private final String key;
+  ArrayList&lt;String&gt; keys;
+  LetterBag ourLetters;
+  HashSet&lt;String&gt; possibles;
+  boolean done;
+
+  /**
+   *
+   * @param keyTree The results tree of Anagram keys
+   * @param searchesSoFar All searches, sorted alphabetically
+   * @param keys The list of previous keys
+   * @param key the potential key
+   * @param possibles the collection of legal keys
+   * @param letters the remaining letters to include
+   */
+<span class="fc" id="L25">  public Query(Tree&lt;String&gt; keyTree, Set searchesSoFar, ArrayList&lt;String&gt; keys, String key, HashSet&lt;String&gt; possibles, LetterBag letters) {</span>
+<span class="fc" id="L26">    this.keyTree = keyTree;</span>
+<span class="fc" id="L27">    this.searchesSoFar = searchesSoFar;</span>
+<span class="fc" id="L28">    this.keys = keys;</span>
+<span class="fc" id="L29">    this.key = key;</span>
+<span class="fc" id="L30">    keys.add(key);</span>
+<span class="fc" id="L31">    String searchKey = new ComparableSearchRepresentation(keys).toKey();</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">    done = ! searchesSoFar.add(searchKey);</span>
+<span class="fc" id="L33">    ourLetters = letters.copy().remove(key);</span>
+<span class="fc" id="L34">    this.possibles = possibles;</span>
+<span class="fc" id="L35">  }</span>
+
+  public boolean producesResults() {
+
+<span class="fc bfc" id="L39" title="All 2 branches covered.">    if (done) {</span>
+<span class="fc" id="L40">      return false;</span>
+    }
+
+<span class="fc bfc" id="L43" title="All 2 branches covered.">    if (ourLetters.count() == 0) {</span>
+<span class="fc" id="L44">      Tree&lt;String&gt; childKeyResultTree = new Tree&lt;String&gt;(key);</span>
+<span class="fc" id="L45">      keyTree.add(childKeyResultTree);</span>
+<span class="fc" id="L46">      return true;</span>
+    } else {
+<span class="fc" id="L48">      HashSet&lt;String&gt; remainingPossibilities = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">      for (String p: possibles) {</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (ourLetters.contains(p)) {</span>
+<span class="fc" id="L51">          remainingPossibilities.add(p);</span>
+        }
+<span class="fc" id="L53">      }</span>
+
+<span class="fc" id="L55">      Tree&lt;String&gt; childKeyResultTree = new Tree&lt;&gt;(key);</span>
+
+
+<span class="fc" id="L58">      boolean found = false;</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">      for (String p : remainingPossibilities) {</span>
+
+<span class="fc" id="L61">        ArrayList&lt;String&gt; childKeys = (ArrayList)keys.clone();</span>
+<span class="fc" id="L62">        Query childQuery = new Query(</span>
+            childKeyResultTree,
+            searchesSoFar,
+            childKeys,
+            p,
+            remainingPossibilities,
+            ourLetters);
+<span class="fc" id="L69">        boolean terminal = childQuery.producesResults();</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (terminal) {</span>
+<span class="fc" id="L71">          found = true;</span>
+        //  keys.add(p);
+
+<span class="fc" id="L74">          keyTree.add(childKeyResultTree);</span>
+
+        }
+<span class="fc" id="L77">      }</span>
+<span class="fc" id="L78">      return found;</span>
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
