@@ -1,0 +1,13 @@
+The problem, eventually overwhelming, was the quality of the words in words.txt.
+
+It contained many non-words and many short ones at that.
+As we use the dictionary to define the possible words having nonsense
+in the dictionary does not work, also we want as small a dictionary as possible.
+Words.txt still contained 230011 words after many silly words had been removed.
+
+Instead we use the smaller (60388) file 2of4brif.txt from http://wordlist.aspell.net/12dicts/
+This dictionary contains British english, no abbreviations, no acronyms,
+no hyphenations, no names, no phrases but inflections.
+Note that the word 'a' and I were not included, but added manually.
+
+Other choices can be made from the zip file of dictionaries.

@@ -24,7 +24,8 @@ public class Dictionary {
    * Construct using default file.
    */
   public Dictionary() throws IOException {
-    this("/data/words.txt");
+    this("/data/2of4brif.txt");
+//    this("/data/words.txt");
   }
 
   /**
@@ -34,13 +35,18 @@ public class Dictionary {
    */
   private Dictionary(String fileName) throws IOException {
     InputStream input = getClass().getResourceAsStream(fileName);
-    BufferedReader inputReader = new BufferedReader(new InputStreamReader(input));
+    if (input == null) {
+      throw new RuntimeException("Cannot open " + fileName);
+    }
+    InputStreamReader inputStreamReader = new InputStreamReader(input);
+    BufferedReader inputReader = new BufferedReader(inputStreamReader);
     // note that line terminator is not returned
     String line = inputReader.readLine();
     while (line != null) {
 
       // Exclude proper names from the dictionary
-      if (!Character.isUpperCase(line.charAt(0))) {
+      if (!Character.isUpperCase(line.charAt(0))
+          || line.contains("%")) {
         String orderedKey = Anagram.toKey(line);
         if (!store.containsKey(orderedKey)) {
           store.put(orderedKey, new ArrayList<String>(MAX_COMMON_KEY));

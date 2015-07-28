@@ -13,20 +13,22 @@ public class DictionaryTest
 
   public void testDictionaryConstructor() throws Exception {
     Dictionary it = new Dictionary();
-    // As some words share a key the size will be smaller than the
+    // As some words share a key the size will be smaller
+    // than the number of words in the dictionary
     assertTrue(it.size() < Dictionary.WORD_COUNT);
-    // Initial size 195763
-    // Current, cut down size
-    assertEquals(195016, it.size());
+    // Initial size of word.txt derived dictionary: 195763
+    // manually cut down size, before abandoning: 191555
+    // using data/2of4brif.txt
+    assertEquals(56370, it.size());
   }
 
   /** Test to discover the best initial value for common words list. */
   public void testLargestCommonKey() throws Exception {
     Dictionary it = new Dictionary();
     String mostCommonKey = it.firstMostCommonKey();
-    assertEquals("acert", mostCommonKey);
+    assertEquals("aeprs", mostCommonKey);
     ArrayList<String> them = it.get(mostCommonKey).words();
-    assertEquals(9, them.size());
+    assertEquals(7, them.size());
   }
 
   /**
@@ -35,10 +37,10 @@ public class DictionaryTest
    public void testFirstLongestKey() throws Exception {
      Dictionary it = new Dictionary();
      String firstLongestKey = it.firstLongestKey();
-     assertEquals("acccefhhiiiiillnoooppsst", firstLongestKey);
+     assertEquals("aacceeeeghllmnooprrst", firstLongestKey);
      ArrayList<String> them = it.get(firstLongestKey).words();
-     assertEquals("[scientificophilosophical]", them.toString());
-     assertEquals(24, firstLongestKey.length());
+     assertEquals("[electroencephalograms]", them.toString());
+     assertEquals(21, firstLongestKey.length());
 
   }
 
@@ -58,7 +60,7 @@ public class DictionaryTest
     assertTrue(it.get("tinsel").words().contains("tinsel"));
 
     // if key is not a valid word it is not included in results
-    assertEquals("[enlist, listen, silent, tinsel]", it.get("listne").words().toString());
+    assertEquals("[enlist, inlets, listen, silent, tinsel]", it.get("listne").words().toString());
     assertFalse(it.get("listne").words().contains("listne"));
 
   }
@@ -107,7 +109,7 @@ public class DictionaryTest
         them += ",";
       }
     }
-    assertEquals("am,an,as,at,be,by,do,eg,eh,ei,em,ew,ex,ey,fi,fo,go,hi,in,ip,is,it,ko,lo,my,no,or,os,ot,ox,pu,su,", them);
+    assertEquals("am,an,as,at,be,by,do,eh,em,er,ew,ex,ey,fi,fo,go,hi,in,ip,is,it,lo,my,no,or,os,ot,ox,pu,su,", them);
   }
 
   public void testCapitalised() {
@@ -123,23 +125,20 @@ public class DictionaryTest
     Tree ant = tree.add("ant");
     assertEquals("[Ant, Tan]", it.output(tree).toString());
     ant.add("aet").add("act");
-    assertEquals(
-       "[Ant Ate Act, " +
+    assertEquals("[" +
+        "Ant Ate Act, " +
         "Ant Ate Cat, " +
         "Ant Eat Act, " +
         "Ant Eat Cat, " +
-        "Ant Tae Act, " +
-        "Ant Tae Cat, " +
         "Ant Tea Act, " +
         "Ant Tea Cat, " +
         "Tan Ate Act, " +
         "Tan Ate Cat, " +
         "Tan Eat Act, " +
         "Tan Eat Cat, " +
-        "Tan Tae Act, " +
-        "Tan Tae Cat, " +
         "Tan Tea Act, " +
-        "Tan Tea Cat]", it.output(tree).toString());
+        "Tan Tea Cat" +
+        "]", it.output(tree).toString());
 
   }
 }

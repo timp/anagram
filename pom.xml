@@ -62,7 +62,7 @@
         <directory>${project.basedir}/data</directory>
         <targetPath>data</targetPath>
         <includes>
-          <include>words.txt</include>
+          <include>*.txt</include>
         </includes>
       </resource>
     </resources>

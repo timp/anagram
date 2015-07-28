@@ -52,6 +52,7 @@ public class Anagrammer {
       }
     }
 
+    System.err.println(resultTree);
     return dictionary.output(resultTree);
   }
 
