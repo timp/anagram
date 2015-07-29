@@ -2,6 +2,7 @@ package com.github.timp.anagram;
 
 import junit.framework.TestCase;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -66,28 +67,6 @@ public class DictionaryTest
   }
 
 
-  public void testLookup() throws Exception {
-    Dictionary it = new Dictionary();
-
-    assertEquals("[be]", Arrays.toString(it.lookup("be")));
-    assertEquals("[a]", Arrays.toString(it.lookup("a")));
-
-    assertEquals("[]",Arrays.toString(it.lookup("bfre")));
-
-    assertEquals("[act, cat]", Arrays.toString(it.lookup("cat")));
-  }
-
-  /**
-   * TODO this is incomplete
-   * TODO delete this
-   * @throws Exception
-   */
-  public void testExists() throws Exception {
-    Dictionary it = new Dictionary();
-
-    System.err.println(it.exists("bet"));
-
-  }
 
   public void testOneLetterWords() throws Exception {
     Dictionary it = new Dictionary();
@@ -140,5 +119,12 @@ public class DictionaryTest
         "Tan Tea Cat" +
         "]", it.output(tree).toString());
 
+  }
+
+  public void testFileNotFound() throws IOException {
+    try {
+      Dictionary it = new Dictionary("FileNotFound");
+      fail("should have bombed");
+    } catch (IOException e) {}
   }
 }
