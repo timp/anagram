@@ -5,11 +5,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Query {
+
+  // Tuned to enable "Benedict Cumberbatch" to return in 21s
+  // This throttling is allowed within the specification which
+  // does NOT specify all possible anagrams from the dictionary must be produced.
+  public static int MAX_POSSIBILITIES_THROTTLE = 51;
   private final Set searchesSoFar;
   private final Tree<String> keyTree;
   private final String key;
   ArrayList<String> keys;
-  LetterBag ourLetters;
+  LetterBag letters;
   HashSet<String> possibles;
   boolean done;
 
@@ -20,9 +25,11 @@ public class Query {
    * @param keys The list of previous keys
    * @param key the potential key
    * @param possibles the collection of legal keys
-   * @param letters the remaining letters to include
+   * @param previousLetters the remaining letters to include
    */
-  public Query(Tree<String> keyTree, Set searchesSoFar, ArrayList<String> keys, String key, HashSet<String> possibles, LetterBag letters) {
+  public Query(Tree<String> keyTree, Set searchesSoFar, ArrayList<String> keys, String key,
+               HashSet<String> possibles,
+               LetterBag previousLetters) {
     this.keyTree = keyTree;
     this.searchesSoFar = searchesSoFar;
     this.keys = keys;
@@ -30,7 +37,7 @@ public class Query {
     keys.add(key);
     String searchKey = new ComparableSearchRepresentation(keys).toKey();
     done = ! searchesSoFar.add(searchKey);
-    ourLetters = letters.copy().remove(key);
+    letters = previousLetters.copy().remove(key);
     this.possibles = possibles;
   }
 
@@ -40,16 +47,23 @@ public class Query {
       return false;
     }
 
-    if (ourLetters.count() == 0) {
+    if (letters.count() == 0) {
       Tree<String> childKeyResultTree = new Tree<String>(key);
       keyTree.add(childKeyResultTree);
       return true;
     } else {
       HashSet<String> remainingPossibilities = new HashSet<>();
+      int possibilitiesCount = 0;
       for (String p: possibles) {
-        if (ourLetters.contains(p)) {
-          remainingPossibilities.add(p);
+        if (possibilitiesCount < MAX_POSSIBILITIES_THROTTLE) {
+          if (letters.contains(p)) {
+            possibilitiesCount++;
+            remainingPossibilities.add(p);
+          }
         }
+      }
+      if (remainingPossibilities.size() == 0) {
+        return false;
       }
 
       Tree<String> childKeyResultTree = new Tree<>(key);
@@ -65,7 +79,7 @@ public class Query {
             childKeys,
             p,
             remainingPossibilities,
-            ourLetters);
+            letters);
         boolean terminal = childQuery.producesResults();
         if (terminal) {
           found = true;
