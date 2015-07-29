@@ -1,7 +1,12 @@
 package com.github.timp.anagram;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
 /**
  * A data structure keyed on alphabetical keys and containing values of lists of
@@ -18,8 +23,6 @@ public class Dictionary {
   private static final int MAX_COMMON_KEY = 10;
 
   private HashMap<String, ArrayList<String>> store = new HashMap<>(WORD_COUNT);
-  private Trie dictTrie = new Trie();
-
   /**
    * Construct using default file.
    */
@@ -33,10 +36,10 @@ public class Dictionary {
    *
    * @param fileName the name of a file discoverable within the classpath
    */
-  private Dictionary(String fileName) throws IOException {
+  public Dictionary(String fileName) throws IOException {
     InputStream input = getClass().getResourceAsStream(fileName);
     if (input == null) {
-      throw new RuntimeException("Cannot open " + fileName);
+      throw new IOException("Cannot open " + fileName);
     }
     InputStreamReader inputStreamReader = new InputStreamReader(input);
     BufferedReader inputReader = new BufferedReader(inputStreamReader);
@@ -45,14 +48,12 @@ public class Dictionary {
     while (line != null) {
 
       // Exclude proper names from the dictionary
-      if (!Character.isUpperCase(line.charAt(0))
-          || line.contains("%")) {
+      if (!Character.isUpperCase(line.charAt(0))) {
         String orderedKey = Anagram.toKey(line);
         if (!store.containsKey(orderedKey)) {
           store.put(orderedKey, new ArrayList<String>(MAX_COMMON_KEY));
         }
         store.get(orderedKey).add(line);
-        dictTrie.add(line);
       }
       line = inputReader.readLine();
     }
@@ -153,97 +154,6 @@ public class Dictionary {
   /** @return word with initial letter capitalised */
   public static String capitalised(String s) {
     return s.substring(0,1).toUpperCase() + s.substring(1);
-  }
-
-  /**
-   * TODO delete me
-   * Find a word set in the trie.
-   * @param word the word to look for
-   * @return the anagrams found
-   */
-  public String[] lookup(String word) {
-    return lookup(word, word.length());
-  }
-
-
-  /**
-   * TODO delete me
-   * Find anagrams of a word.
-   * @param word the word to anagram
-   * @param len the length of legal anagrams or zero to include substrings
-   * @return the anagrams found
-   */
-  private String[] lookup(String word, int len) {
-    return lookupSet(word, len).toArray(new String[0]);
-  }
-
-  /**
-   * TODO delete me
-   *
-   * @param word the word to anagram
-   * @param len the length of legal anagrams or zero to include substrings
-   * @return the anagrams found
-   */
-  private Set<String> lookupSet(String word, int len) {
-    Set<String> result = new HashSet<String>();
-    fillWordSet(result, dictTrie, new StringBuilder(word), len);
-    return result;
-  }
-
-  /**
-   *
-   * @param setToFill the set to update
-   * @param t the current trie
-   * @param w the current word
-   * @param requiredLength the length of word required or 0 for substrings
-   */
-  private void fillWordSet(Set<String> setToFill,
-                           Trie t,
-                           StringBuilder w,
-                           int requiredLength) {
-    if (t.marksEndOfWord() && requiredLength == 0 ) {
-      setToFill.add(t.getWord());
-    } else {
-      final int wlen = w.length();
-      for (int i = 0; i < wlen; i++) {
-        final Trie ch = t.getChild(w.charAt(i));
-        if (ch != null) {
-          final char c = w.charAt(i);
-          w.deleteCharAt(i);
-          fillWordSet(setToFill, ch, w, requiredLength - 1);
-          w.insert(i, c);
-        }
-      }
-    }
-  }
-
-
-  /**
-   *
-   * @param query the string to look for in the dictionary
-   * @return whether this string is in the trie either as completed string or as the start of one
-   */
-  public boolean exists(String query) {
-    return exists(new StringBuilder(query), dictTrie, query.length());
-  }
-
-  private boolean exists(StringBuilder query, Trie trie, int requiredLength) {
-    if (trie.marksEndOfWord() && requiredLength == 0 ) {
-      return true;
-    } else {
-      boolean hasChild = false;
-      final int wlen = query.length();
-      for (int i = 0; i < wlen; i++) {
-        final Trie child = trie.getChild(query.charAt(i));
-        if (child != null) {
-          final char c = query.charAt(i);
-          query.deleteCharAt(i);
-          hasChild = exists(query, child, requiredLength - 1);
-          query.insert(i, c);
-        }
-      }
-      return hasChild;
-    }
   }
 
   public Set<String> keys() {
