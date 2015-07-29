@@ -23,12 +23,12 @@ public class Dictionary {
   private static final int MAX_COMMON_KEY = 10;
 
   private HashMap<String, ArrayList<String>> store = new HashMap<>(WORD_COUNT);
+
   /**
    * Construct using default file.
    */
   public Dictionary() throws IOException {
     this("/data/2of4brif.txt");
-//    this("/data/words.txt");
   }
 
   /**
@@ -68,14 +68,18 @@ public class Dictionary {
   }
 
   /**
+   * @return all the keys of the store
+   */
+  public Set<String> keys() {
+    return store.keySet();
+  }
+
+  /**
    * @return the entry represented by this key
    */
   public Anagram get(String query) {
-
     return new Anagram(query, store.get(Anagram.toKey(query)));
   }
-
-
 
   /**
    * @return the first key with the largest number of values represented by it
@@ -109,6 +113,11 @@ public class Dictionary {
   }
 
 
+  /**
+   * Obtain the anagrams repesented by a list of anagram keys.
+   * @param resultTree a tree of anagram keys
+   * @return a list of strings each of which is a possible permutation of the found anagrams
+   */
   public ArrayList<String> output(Tree<String> resultTree) {
     return output(new ArrayList<String>(), resultTree, new ArrayList<String>());
   }
@@ -156,8 +165,5 @@ public class Dictionary {
     return s.substring(0,1).toUpperCase() + s.substring(1);
   }
 
-  public Set<String> keys() {
-    return store.keySet();
-  }
 
 }

@@ -18,7 +18,6 @@ import java.util.Arrays;
  */
 public class Anagram {
 
-
   private String key;
   private ArrayList<String> words;
 
@@ -76,6 +75,5 @@ public class Anagram {
     Arrays.sort(them);
     return new String(them);
   }
-
 
 }

@@ -136,6 +136,7 @@ public class LetterBag {
     return sb.toString();
   }
 
+  /** Clone by another name. */
   public LetterBag copy() {
     return (LetterBag)clone();
   }

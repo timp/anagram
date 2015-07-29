@@ -1,14 +1,16 @@
 package com.github.timp.anagram;
 
 import java.util.ArrayList;
-/** A multi branching tree. */
+import java.util.LinkedHashSet;
+
+/** A multi branching tree with unique values at each level. */
 public class Tree<T> {
   T value;
-  ArrayList<Tree<T>> children;
+  LinkedHashSet<Tree<T>> children;
 
   public Tree(T value) {
     this.value = value;
-    children = new ArrayList<>();
+    children = new LinkedHashSet<>();
   }
 
   public void add(Tree<T> child) {
@@ -25,7 +27,7 @@ public class Tree<T> {
     return value;
   }
 
-  public ArrayList<Tree<T>> getChildren() {
+  public LinkedHashSet<Tree<T>> getChildren() {
     return children;
   }
 

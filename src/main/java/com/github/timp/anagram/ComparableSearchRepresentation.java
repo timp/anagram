@@ -30,6 +30,9 @@ public class ComparableSearchRepresentation {
     return this;
   }
 
+  /**
+   * @return the terms separated by a pipe character
+   */
   public String toKey() {
     StringBuilder keyBuilder = new StringBuilder();
     boolean first = true;
