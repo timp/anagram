@@ -64,7 +64,7 @@ lower case characters as the same.
  To ensure that the Lists holding the valid words for a key are not resized the maximum number of 
  words to a key was discovered using a test (it is 10).
 
-###### Finding all possible ways of sub dividing a string
+###### Finding all possible one word anagrams of a string
  The problem is to generate all permutations of a string and then all possible word boundaries for each permutation. 
  We hit the combinatorial explosion fairly early! _Benedict Cumberbatch_ is 19 characters 
  of which there are 19 factorial (121645100408832000) permutations for each one of which 
@@ -85,8 +85,20 @@ lower case characters as the same.
  and then query that for each generated permutation, pruning branches where there is no entry in 
  the trie. 
  
- 
- 
+
+###### Multi word anagrams
+
+The technique above works fine for one word anagrams but it fails for multiword anagrams. 
+To tame the combinatorial space I have used a few techniques: 
+
+  - used a new dictionary, after more than a week it became apparent that the supplied dictionary 
+  was not fit for pupose and could not be fixed manually in  a reasonable length of time. A new dictionary from http://wordlist.aspell.net/12dicts/ is smaller and does not have nonsense words in.
+  - filtering the possibilities by available letters, clearly only letters available in the input string should be included. 
+  - throttling the possibilities by an absolute number only worked for the particular string tuned to, 
+    more work could be put into designign a better throttle.
+   
 ###### Parrallelisation
 The tests we have developed so far should still pass after parallelisation.
+Because we have to share a structure of previous searches to exclude repeated 
+searches it is anticipated that parrallelisation will require substantial machinery. 
 
