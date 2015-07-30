@@ -1,7 +1,6 @@
 package com.github.timp.anagram;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -13,7 +12,7 @@ import java.util.Collections;
  */
 public class ComparableSearchRepresentation {
 
-  ArrayList<String> terms;
+  private ArrayList<String> terms;
 
   public ComparableSearchRepresentation() {
     terms = new ArrayList<>();

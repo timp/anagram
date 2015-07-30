@@ -129,7 +129,7 @@ public class Dictionary {
    * @param accumulator to collect values for each top level child
    * @return A list of anagrams discovered from the keys tree
    */
-  public ArrayList<String> output(ArrayList<String> soFar,
+  private ArrayList<String> output(ArrayList<String> soFar,
                                   Tree<String> keysTree,
                                   ArrayList<String> accumulator) {
 

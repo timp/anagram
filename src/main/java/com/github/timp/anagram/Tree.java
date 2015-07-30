@@ -1,12 +1,11 @@
 package com.github.timp.anagram;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 /** A multi branching tree with unique values at each level. */
 public class Tree<T> {
-  T value;
-  LinkedHashSet<Tree<T>> children;
+  private T value;
+  private LinkedHashSet<Tree<T>> children;
 
   public Tree(T value) {
     this.value = value;

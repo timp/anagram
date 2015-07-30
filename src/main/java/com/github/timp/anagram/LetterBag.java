@@ -9,7 +9,7 @@ package com.github.timp.anagram;
  */
 public class LetterBag {
 
-  int[] histogram = new int[26];
+  private int[] histogram = new int[26];
 
   /**
    * Add the word to the letter counts.

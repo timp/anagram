@@ -56,6 +56,8 @@ public class Anagram {
   /**
    * NOTE: The current Dictionary load loop rejects any initial capitalised words
    * so only lowercase characters are actually encountered.
+   *
+   * @param line the unordered string
    * @return a sorted, lowercased string of letters only
    */
   public static String toKey(String line) {

@@ -3,7 +3,6 @@ package com.github.timp.anagram;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -20,7 +19,8 @@ public class Anagrammer {
   /**
    * @param args one or more space separated strings
    * @return the capitalised results
-   * */
+   * @throws IOException if the file does not exist or there is a problem reading it
+   */
   public ArrayList<String> run(String[] args) throws IOException {
     // Populate our dictionary from file
     dictionary = new Dictionary();
@@ -41,11 +41,9 @@ public class Anagrammer {
     Set<String> searches = new HashSet<>();
     AnagramKeyTree resultTree = new AnagramKeyTree();
    for (String p : possibles) {
-
       ArrayList<String> keys = new ArrayList<>();
       Query q = new Query(resultTree, searches, keys, p, possibles, letters);
-      if (q.producesResults()) {
-      }
+      q.producesResults();
     }
 
     return dictionary.output(resultTree);

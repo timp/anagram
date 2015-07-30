@@ -4,7 +4,6 @@ import junit.framework.TestCase;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Tests for the Dictionary class.

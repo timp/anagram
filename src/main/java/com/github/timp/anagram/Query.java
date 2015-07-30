@@ -16,10 +16,10 @@ public class Query {
   private final Set searchesSoFar;
   private final Tree<String> keyTree;
   private final String key;
-  ArrayList<String> keys;
-  LetterBag letters;
-  HashSet<String> possibles;
-  boolean done;
+  private ArrayList<String> keys;
+  private LetterBag letters;
+  private HashSet<String> possibles;
+  private boolean done;
 
   /**
    * @param keyTree The results tree of Anagram keys
@@ -76,7 +76,9 @@ public class Query {
       boolean found = false;
       for (String p : remainingPossibilities) {
 
-        ArrayList<String> childKeys = (ArrayList)keys.clone();
+
+        ArrayList<String> childKeys = new ArrayList<>(keys.size());
+        childKeys.addAll(keys);
         Query childQuery = new Query(
             childKeyResultTree,
             searchesSoFar,
@@ -93,4 +95,5 @@ public class Query {
       return found;
     }
   }
+
 }
