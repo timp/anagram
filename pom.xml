@@ -106,7 +106,7 @@
             <manifest>
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-              <mainClass>${project.groupId}.${project.artifactId}.${project.name}</mainClass>
+              <mainClass>${project.groupId}.${project.artifactId}.Anagrammer</mainClass>
             </manifest>
           </archive>
         </configuration>
