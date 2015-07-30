@@ -3,7 +3,7 @@ Outstanding items at tim of submission
 
 DONE All input letters must be used, just once
 DONE Only words from the dictionary can be output
-TODO Repeated output should be filtered
+DONE Repeated output should be filtered
 TODO Investigate the use of Multiple threads to search the dictionary
 DONE Unit tests must be supplied
 DONE JavaDoc expected
