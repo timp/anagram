@@ -9,7 +9,7 @@
  */
 <span class="fc" id="L10">public class LetterBag {</span>
 
-<span class="fc" id="L12">  int[] histogram = new int[26];</span>
+<span class="fc" id="L12">  private int[] histogram = new int[26];</span>
 
   /**
    * Add the word to the letter counts.
@@ -136,8 +136,9 @@
 <span class="fc" id="L136">    return sb.toString();</span>
   }
 
+  /** Clone by another name. */
   public LetterBag copy() {
-<span class="fc" id="L140">    return (LetterBag)clone();</span>
+<span class="fc" id="L141">    return (LetterBag)clone();</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

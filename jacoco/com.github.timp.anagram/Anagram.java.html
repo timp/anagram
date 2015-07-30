@@ -18,7 +18,6 @@ import java.util.Arrays;
  */
 public class Anagram {
 
-
   private String key;
   private ArrayList&lt;String&gt; words;
 
@@ -27,24 +26,24 @@ public class Anagram {
    * @param example the key or example, it is not added to word list automatically
    * @param words the current words
    */
-<span class="fc" id="L30">  public Anagram(String example, ArrayList&lt;String&gt; words) {</span>
-<span class="fc" id="L31">    this.key = toKey(example);</span>
-<span class="fc" id="L32">    this.words = words;</span>
-<span class="fc" id="L33">  }</span>
+<span class="fc" id="L29">  public Anagram(String example, ArrayList&lt;String&gt; words) {</span>
+<span class="fc" id="L30">    this.key = toKey(example);</span>
+<span class="fc" id="L31">    this.words = words;</span>
+<span class="fc" id="L32">  }</span>
 
   /**
    *
    * @param example the key or example, it is not added to word list automatically
    */
   public Anagram(String example) {
-<span class="fc" id="L40">    this(example, new ArrayList&lt;String&gt;());</span>
-<span class="fc" id="L41">  }</span>
+<span class="fc" id="L39">    this(example, new ArrayList&lt;String&gt;());</span>
+<span class="fc" id="L40">  }</span>
 
   /**
    * @return The alphabetically ordered sequence of our letters.
    */
   public String key() {
-<span class="fc" id="L47">    return key;</span>
+<span class="fc" id="L46">    return key;</span>
   }
 
   /**
@@ -52,31 +51,32 @@ public class Anagram {
    * @return the words allowed for this collection of letters.
    */
   public ArrayList&lt;String&gt; words() {
-<span class="fc" id="L55">    return words;</span>
+<span class="fc" id="L54">    return words;</span>
   }
   /**
    * NOTE: The current Dictionary load loop rejects any initial capitalised words
    * so only lowercase characters are actually encountered.
+   *
+   * @param line the unordered string
    * @return a sorted, lowercased string of letters only
    */
   public static String toKey(String line) {
-<span class="fc" id="L63">    StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">    for (char c : line.toCharArray()) {</span>
+<span class="fc" id="L64">    StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">    for (char c : line.toCharArray()) {</span>
       // A == 65
       // Z == 90
       // a == 97
       // z == 122
-<span class="pc bpc" id="L69" title="1 of 4 branches missed.">      if (c &gt;= 65 &amp;&amp; c &lt;= 90) {</span>
-<span class="fc" id="L70">        sb.append(c);</span>
-<span class="pc bpc" id="L71" title="2 of 4 branches missed.">      } else if (c &gt;= 97 &amp;&amp; c &lt;= 122) {</span>
-<span class="fc" id="L72">        sb.append(c);</span>
+<span class="pc bpc" id="L70" title="1 of 4 branches missed.">      if (c &gt;= 65 &amp;&amp; c &lt;= 90) {</span>
+<span class="fc" id="L71">        sb.append(c);</span>
+<span class="pc bpc" id="L72" title="2 of 4 branches missed.">      } else if (c &gt;= 97 &amp;&amp; c &lt;= 122) {</span>
+<span class="fc" id="L73">        sb.append(c);</span>
       }
     }
-<span class="fc" id="L75">    char[] them = sb.toString().toLowerCase().toCharArray();</span>
-<span class="fc" id="L76">    Arrays.sort(them);</span>
-<span class="fc" id="L77">    return new String(them);</span>
+<span class="fc" id="L76">    char[] them = sb.toString().toLowerCase().toCharArray();</span>
+<span class="fc" id="L77">    Arrays.sort(them);</span>
+<span class="fc" id="L78">    return new String(them);</span>
   }
-
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

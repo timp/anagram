@@ -1,58 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Tree.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Anagram</a> &gt; <a href="index.source.html" class="el_package">com.github.timp.anagram</a> &gt; <span class="el_source">Tree.java</span></div><h1>Tree.java</h1><pre class="source lang-java linenums">package com.github.timp.anagram;
 
-import java.util.ArrayList;
-/** A multi branching tree. */
-public class Tree&lt;T&gt; {
-  T value;
-  ArrayList&lt;Tree&lt;T&gt;&gt; children;
+import java.util.LinkedHashSet;
 
-<span class="fc" id="L9">  public Tree(T value) {</span>
-<span class="fc" id="L10">    this.value = value;</span>
-<span class="fc" id="L11">    children = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L12">  }</span>
+/** A multi branching tree with unique values at each level. */
+public class Tree&lt;T&gt; {
+  private T value;
+  private LinkedHashSet&lt;Tree&lt;T&gt;&gt; children;
+
+<span class="fc" id="L10">  public Tree(T value) {</span>
+<span class="fc" id="L11">    this.value = value;</span>
+<span class="fc" id="L12">    children = new LinkedHashSet&lt;&gt;();</span>
+<span class="fc" id="L13">  }</span>
 
   public void add(Tree&lt;T&gt; child) {
-<span class="fc" id="L15">    children.add(child);</span>
-<span class="fc" id="L16">  }</span>
+<span class="fc" id="L16">    children.add(child);</span>
+<span class="fc" id="L17">  }</span>
 
   public Tree&lt;T&gt; add(T c) {
-<span class="fc" id="L19">    Tree&lt;T&gt; child = new Tree&lt;&gt;(c);</span>
-<span class="fc" id="L20">    add(child);</span>
-<span class="fc" id="L21">    return child;</span>
+<span class="fc" id="L20">    Tree&lt;T&gt; child = new Tree&lt;&gt;(c);</span>
+<span class="fc" id="L21">    add(child);</span>
+<span class="fc" id="L22">    return child;</span>
   }
 
   public T getValue() {
-<span class="fc" id="L25">    return value;</span>
+<span class="fc" id="L26">    return value;</span>
   }
 
-  public ArrayList&lt;Tree&lt;T&gt;&gt; getChildren() {
-<span class="fc" id="L29">    return children;</span>
+  public LinkedHashSet&lt;Tree&lt;T&gt;&gt; getChildren() {
+<span class="fc" id="L30">    return children;</span>
   }
 
   public boolean isLeaf() {
-<span class="fc bfc" id="L33" title="All 2 branches covered.">    return children.size() == 0;</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">    return children.size() == 0;</span>
   }
 
   public String toString() {
-<span class="fc" id="L37">    return toString(0);</span>
+<span class="fc" id="L38">    return toString(0);</span>
   }
 
   private String toString(int indent) {
-<span class="fc" id="L41">    String padding = &quot;&quot;;</span>
-<span class="fc bfc" id="L42" title="All 2 branches covered.">    for (int i = 0; i &lt; indent; i++) {</span>
-<span class="fc" id="L43">      padding += &quot; &quot;;</span>
+<span class="fc" id="L42">    String padding = &quot;&quot;;</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">    for (int i = 0; i &lt; indent; i++) {</span>
+<span class="fc" id="L44">      padding += &quot; &quot;;</span>
     }
-<span class="fc" id="L45">    String ret = padding + getValue() + &quot;{&quot;;</span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">    for (Tree&lt;T&gt; child : getChildren()) {</span>
-<span class="fc" id="L47">      ret += &quot;\n&quot;;</span>
-<span class="fc" id="L48">      ret += child.toString(indent + 1);</span>
-<span class="fc" id="L49">    }</span>
-<span class="fc bfc" id="L50" title="All 2 branches covered.">    if (! isLeaf()) {</span>
-<span class="fc" id="L51">      ret += &quot;\n&quot;;</span>
-<span class="fc" id="L52">      ret += padding;</span>
+<span class="fc" id="L46">    String ret = padding + getValue() + &quot;{&quot;;</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">    for (Tree&lt;T&gt; child : getChildren()) {</span>
+<span class="fc" id="L48">      ret += &quot;\n&quot;;</span>
+<span class="fc" id="L49">      ret += child.toString(indent + 1);</span>
+<span class="fc" id="L50">    }</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">    if (! isLeaf()) {</span>
+<span class="fc" id="L52">      ret += &quot;\n&quot;;</span>
+<span class="fc" id="L53">      ret += padding;</span>
     }
-<span class="fc" id="L54">    ret += &quot;}&quot;;</span>
-<span class="fc" id="L55">    return ret;</span>
+<span class="fc" id="L55">    ret += &quot;}&quot;;</span>
+<span class="fc" id="L56">    return ret;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
