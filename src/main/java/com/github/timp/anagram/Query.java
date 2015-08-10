@@ -46,6 +46,9 @@ public class Query {
     this.possibles = possibles;
   }
 
+  /**
+   * @return whether this query produces at least one result
+   */
   public boolean producesResults() {
 
     if (done) {
@@ -75,7 +78,6 @@ public class Query {
 
       boolean found = false;
       for (String p : remainingPossibilities) {
-
 
         ArrayList<String> childKeys = new ArrayList<>(keys.size());
         childKeys.addAll(keys);

@@ -46,11 +46,17 @@ public class LetterBag {
     return s;
   }
 
-  /** @return the number of this letter added */
+  /**
+   * @param s the letter to count
+   * @return the number of this letter added
+   */
   public int count(String s) {
     return count(s2c(s));
   }
-  /** @return the number of this letter added */
+  /**
+   * @param c the character to count
+   * @return the number of this letter added
+   */
   public int count(char c) {
     return count(cToI(c));
   }
@@ -87,9 +93,9 @@ public class LetterBag {
 
   /**
    * Remove a single character.
+   * @param c the character to remove
    * @return this after removal
    */
-
   public LetterBag remove(char c) {
     if (histogram[cToI(c)] == 0) {
       throw new IllegalStateException("Cannot remove from empty");
@@ -130,6 +136,7 @@ public class LetterBag {
     return it;
   }
 
+  /** @return the String */
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -147,7 +154,9 @@ public class LetterBag {
     return sb.toString();
   }
 
-  /** Clone by another name. */
+  /** Clone by another name.
+   * @return a clone
+   */
   public LetterBag copy() {
     return (LetterBag)clone();
   }

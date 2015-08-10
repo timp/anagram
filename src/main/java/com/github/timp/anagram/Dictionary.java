@@ -75,6 +75,7 @@ public class Dictionary {
   }
 
   /**
+   * @param query the key string to look up
    * @return the entry represented by this key
    */
   public Anagram get(String query) {
@@ -160,7 +161,9 @@ public class Dictionary {
     return accumulator;
   }
 
-  /** @return word with initial letter capitalised */
+  /**
+   * @param s the String to capitalise
+   * @return word with initial letter capitalised */
   public static String capitalised(String s) {
     return s.substring(0,1).toUpperCase() + s.substring(1);
   }

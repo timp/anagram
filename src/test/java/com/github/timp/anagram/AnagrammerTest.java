@@ -36,6 +36,8 @@ public class AnagrammerTest
   /**
    * Test that the application returns expected results.
    * 26 seconds.
+   *
+   * Without a throttle 71558 results found in 11minutes 25seconds.
    */
   public void testBenedictCumberbatch() throws Exception {
     Anagrammer it = new Anagrammer();
