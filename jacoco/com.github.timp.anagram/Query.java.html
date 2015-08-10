@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Query.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Anagram</a> &gt; <a href="index.source.html" class="el_package">com.github.timp.anagram</a> &gt; <span class="el_source">Query.java</span></div><h1>Query.java</h1><pre class="source lang-java linenums">package com.github.timp.anagram;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Query.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Anagrammer</a> &gt; <a href="index.source.html" class="el_package">com.github.timp.anagram</a> &gt; <span class="el_source">Query.java</span></div><h1>Query.java</h1><pre class="source lang-java linenums">package com.github.timp.anagram;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -46,53 +46,55 @@ public class Query {
 <span class="fc" id="L46">    this.possibles = possibles;</span>
 <span class="fc" id="L47">  }</span>
 
+  /**
+   * @return whether this query produces at least one result
+   */
   public boolean producesResults() {
 
-<span class="fc bfc" id="L51" title="All 2 branches covered.">    if (done) {</span>
-<span class="fc" id="L52">      return false;</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">    if (done) {</span>
+<span class="fc" id="L55">      return false;</span>
     }
 
-<span class="fc bfc" id="L55" title="All 2 branches covered.">    if (letters.count() == 0) {</span>
-<span class="fc" id="L56">      Tree&lt;String&gt; leafNode = new Tree&lt;&gt;(key);</span>
-<span class="fc" id="L57">      keyTree.add(leafNode);</span>
-<span class="fc" id="L58">      return true;</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">    if (letters.count() == 0) {</span>
+<span class="fc" id="L59">      Tree&lt;String&gt; leafNode = new Tree&lt;&gt;(key);</span>
+<span class="fc" id="L60">      keyTree.add(leafNode);</span>
+<span class="fc" id="L61">      return true;</span>
     } else {
-<span class="fc" id="L60">      HashSet&lt;String&gt; remainingPossibilities = new HashSet&lt;&gt;();</span>
-<span class="fc" id="L61">      int possibilitiesCount = 0;</span>
-<span class="fc bfc" id="L62" title="All 2 branches covered.">      for (String p: possibles) {</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (possibilitiesCount &lt; MAX_POSSIBILITIES_THROTTLE) {</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">          if (letters.contains(p)) {</span>
-<span class="fc" id="L65">            possibilitiesCount++;</span>
-<span class="fc" id="L66">            remainingPossibilities.add(p);</span>
+<span class="fc" id="L63">      HashSet&lt;String&gt; remainingPossibilities = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L64">      int possibilitiesCount = 0;</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">      for (String p: possibles) {</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (possibilitiesCount &lt; MAX_POSSIBILITIES_THROTTLE) {</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">          if (letters.contains(p)) {</span>
+<span class="fc" id="L68">            possibilitiesCount++;</span>
+<span class="fc" id="L69">            remainingPossibilities.add(p);</span>
           }
         }
-<span class="fc" id="L69">      }</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">      if (remainingPossibilities.size() == 0) {</span>
-<span class="fc" id="L71">        return false;</span>
+<span class="fc" id="L72">      }</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">      if (remainingPossibilities.size() == 0) {</span>
+<span class="fc" id="L74">        return false;</span>
       }
 
-<span class="fc" id="L74">      Tree&lt;String&gt; childKeyResultTree = new Tree&lt;&gt;(key);</span>
+<span class="fc" id="L77">      Tree&lt;String&gt; childKeyResultTree = new Tree&lt;&gt;(key);</span>
 
-<span class="fc" id="L76">      boolean found = false;</span>
-<span class="fc bfc" id="L77" title="All 2 branches covered.">      for (String p : remainingPossibilities) {</span>
+<span class="fc" id="L79">      boolean found = false;</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">      for (String p : remainingPossibilities) {</span>
 
-
-<span class="fc" id="L80">        ArrayList&lt;String&gt; childKeys = new ArrayList&lt;&gt;(keys.size());</span>
-<span class="fc" id="L81">        childKeys.addAll(keys);</span>
-<span class="fc" id="L82">        Query childQuery = new Query(</span>
+<span class="fc" id="L82">        ArrayList&lt;String&gt; childKeys = new ArrayList&lt;&gt;(keys.size());</span>
+<span class="fc" id="L83">        childKeys.addAll(keys);</span>
+<span class="fc" id="L84">        Query childQuery = new Query(</span>
             childKeyResultTree,
             searchesSoFar,
             childKeys,
             p,
             remainingPossibilities,
             letters);
-<span class="fc" id="L89">        boolean terminal = childQuery.producesResults();</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (terminal) {</span>
-<span class="fc" id="L91">          found = true;</span>
-<span class="fc" id="L92">          keyTree.add(childKeyResultTree);</span>
+<span class="fc" id="L91">        boolean terminal = childQuery.producesResults();</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (terminal) {</span>
+<span class="fc" id="L93">          found = true;</span>
+<span class="fc" id="L94">          keyTree.add(childKeyResultTree);</span>
         }
-<span class="fc" id="L94">      }</span>
-<span class="fc" id="L95">      return found;</span>
+<span class="fc" id="L96">      }</span>
+<span class="fc" id="L97">      return found;</span>
     }
   }
 
