@@ -77,4 +77,9 @@ public class LetterBagTest extends TestCase{
     } catch (IllegalArgumentException e) {}
 
   }
+
+  public void testNothingIsNotContained() {
+    LetterBag it = new LetterBag();
+    assertFalse(it.contains(""));
+  }
 }
