@@ -133,4 +133,16 @@ public class AnagrammerTest
     }
   }
 
+  public void testSpaces() throws Exception {
+      Anagrammer it = new Anagrammer();
+      ArrayList<String> results;
+      results = it.run("cat the");
+      for (String line : results) {
+          for (String word : line.split(" ")) {
+              assertTrue(word.charAt(0)>64 && word.charAt(0)<91);
+          }
+      }
+
+  }
+
 }

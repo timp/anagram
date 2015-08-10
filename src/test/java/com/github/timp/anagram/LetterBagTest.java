@@ -6,10 +6,7 @@ public class LetterBagTest extends TestCase{
 
   public void testAdd(){
     LetterBag it = new LetterBag();
-    try {
-      it.add("-");
-      fail("Should have bombed");
-    } catch (IllegalArgumentException e) {}
+    it.add("-"); // silently ignored
     it.add("cat");
     assertEquals(1, it.count("a"));
     it.add("sat");
