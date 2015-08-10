@@ -13,8 +13,11 @@ public class Anagrammer {
   private Dictionary dictionary;
 
   public Anagrammer() throws IOException {
+    // Populate our dictionary from file
     dictionary = new Dictionary();
   }
+
+
 
   /**
    * @param args one or more space separated strings
@@ -22,15 +25,22 @@ public class Anagrammer {
    * @throws IOException if the file does not exist or there is a problem reading it
    */
   public ArrayList<String> run(String[] args) throws IOException {
-    // Populate our dictionary from file
-    dictionary = new Dictionary();
-
-
-    // Filter out impossible words from dictionary
-    LetterBag letters = new LetterBag();
-    for (String word : args) {
-      letters.add(word);
+    String result = "";
+    for (String item : args) {
+      result += item;
     }
+    return run(result);
+  }
+  /**
+   * @param words one or more space separated strings
+   * @return the capitalised results
+   * @throws IOException if the file does not exist or there is a problem reading it
+   */
+  public ArrayList<String> run(String words) throws IOException {
+
+      // Filter out impossible words from dictionary
+    LetterBag letters = new LetterBag();
+    letters.add(words);
     HashSet<String> possibles = new HashSet<>();
     for (String key : dictionary.keys()) {
       if (letters.contains(key)) {
@@ -40,11 +50,11 @@ public class Anagrammer {
 
     Set<String> searches = new HashSet<>();
     AnagramKeyTree resultTree = new AnagramKeyTree();
-   for (String p : possibles) {
+    for (String p : possibles) {
       ArrayList<String> keys = new ArrayList<>();
       Query q = new Query(resultTree, searches, keys, p, possibles, letters);
       q.producesResults();
-    }
+     }
 
     return dictionary.output(resultTree);
   }
