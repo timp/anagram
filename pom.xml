@@ -4,7 +4,7 @@
   <groupId>com.github.timp</groupId>
   <artifactId>anagram</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <name>Anagram</name>
   <description>Interview remote technical assessment to generate anagrams</description>
   <url>https://github.com/timp/anagram</url>
