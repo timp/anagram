@@ -2,15 +2,15 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.timp</groupId>
-  <artifactId>anagram</artifactId>
+  <artifactId>anagrammer</artifactId>
   <packaging>jar</packaging>
   <version>1.0</version>
-  <name>Anagram</name>
+  <name>Anagrammer</name>
   <description>Interview remote technical assessment to generate anagrams</description>
-  <url>https://github.com/timp/anagram</url>
+  <url>https://github.com/timp/anagrammer</url>
 
   <issueManagement>
-    <url>https://github.com/timp/anagram/issues</url>
+    <url>https://github.com/timp/anagrammer/issues</url>
     <system>GitHub Issues</system>
   </issueManagement>
 
@@ -24,9 +24,9 @@
   </licenses>
 
   <scm>
-    <url>https://github.com/timp/anagram</url>
-    <connection>scm:git:git://github.com/timp/anagram.git</connection>
-    <developerConnection>scm:git:git@github.com:timp/anagram.git</developerConnection>
+    <url>https://github.com/timp/anagrammer</url>
+    <connection>scm:git:git://github.com/timp/anagrammer.git</connection>
+    <developerConnection>scm:git:git@github.com:timp/anagrammer.git</developerConnection>
   </scm>
 
   <developers>
@@ -106,7 +106,7 @@
             <manifest>
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-              <mainClass>${project.groupId}.${project.artifactId}.Anagrammer</mainClass>
+              <mainClass>${project.groupId}.${project.artifactId}.${project.name}</mainClass>
             </manifest>
           </archive>
         </configuration>
