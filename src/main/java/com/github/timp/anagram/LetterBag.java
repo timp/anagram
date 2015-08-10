@@ -18,7 +18,11 @@ public class LetterBag {
    */
   public void add(String word) {
     for (char c : word.toLowerCase().toCharArray()) {
-      histogram[cToI(validChar(c))] += 1;
+      try {
+        histogram[cToI(validChar(c))] += 1;
+      } catch (IllegalArgumentException e) {
+        // quietly ignore
+      }
     }
   }
 
@@ -37,7 +41,7 @@ public class LetterBag {
 
   private String validString(String s) {
     if (s.length() != 1) {
-      throw new IllegalArgumentException("Only single charater lookup allowed: '" + s + "''");
+      throw new IllegalArgumentException("Only single character lookup allowed: '" + s + "'");
     }
     return s;
   }
@@ -72,7 +76,11 @@ public class LetterBag {
    */
   public LetterBag remove(String s) {
     for (String single : s.split("")) {
-      remove(s2c(single));
+      // first returned string is 0 length
+      // the behaviour of split differs between java7 and java8
+      if (single.length() == 1) {
+        remove(s2c(single));
+      }
     }
     return this;
   }
@@ -95,6 +103,9 @@ public class LetterBag {
    * @return whether this word could be made from the letters in this
    */
   public boolean contains(String word) {
+    if (word.length() == 0) {
+      return false;
+    }
     LetterBag mutable = (LetterBag) this.clone();
     try {
       for (char c : word.toCharArray()) {
