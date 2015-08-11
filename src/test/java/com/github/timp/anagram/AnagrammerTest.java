@@ -43,7 +43,7 @@ public class AnagrammerTest
     Anagrammer it = new Anagrammer();
     ArrayList<String> results;
     results = it.run(new String[]{"Benedict", "Cumberbatch"});
-    assertEquals(1787, results.size());
+    assertEquals(1784, results.size());
   }
 
 
